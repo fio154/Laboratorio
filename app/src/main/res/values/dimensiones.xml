@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="ancho_tipo_tarjeta">160dp</dimen>
+    <dimen name="alto_tipo_tarjeta">19dp</dimen>
+    <dimen name="marginend_ccv">16dp</dimen>
+    <dimen name="margintop_vencimiento">8dp</dimen>
+    <dimen name="ancho_mes_anio">140dp</dimen>
+    <dimen name="alto_mes_anio">40dp</dimen>
+    <dimen name="margintop_mes_anio">12dp</dimen>
+    <dimen name="marginend_mes_anio">52dp</dimen>
+    <dimen name="margintop_cbu">7dp</dimen>
+    <dimen name="margintop_sw_carga">8dp</dimen>
+    <dimen name="margintop_registrar">8dp</dimen>
+</resources>
