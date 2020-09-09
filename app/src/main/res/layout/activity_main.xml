@@ -146,7 +146,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margintop_sw_carga"
-        android:onClick="onclick"
         android:text="@string/text_carga_inicial" />
 
     <TextView
@@ -165,7 +164,6 @@
         android:id="@+id/terminos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onclick"
         android:text="@string/text_acepto_term" />
 
     <Button
@@ -173,12 +171,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margintop_registrar"
-        android:onClick="Registrar"
         android:text="@string/text_btn_registrar" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/mensaje_exito"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/exito"
+        android:textColor="@color/colorExito" />
 
 </LinearLayout>

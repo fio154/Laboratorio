@@ -18,4 +18,5 @@
     <string name="hint_anio">Año</string>
     <string name="hint_cbu">CBU</string>
     <string name="hint_alias_cbu">Alias CBU</string>
+    <string name="exito">El registro fue exitoso!</string>
 </resources>

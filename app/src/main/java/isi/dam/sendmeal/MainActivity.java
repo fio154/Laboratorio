@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Checkable;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -31,7 +32,7 @@ import model.Usuario;
 public class MainActivity extends AppCompatActivity {
 
     EditText nombre, contrasena, email, repetir_contrasena, num_tarjeta, ccv, cbu, alias_cbu, mes, anio;
-    TextView credito_inicial, tipo_tarjeta;
+    TextView credito_inicial, tipo_tarjeta, mensaje_exito;
     SeekBar skb;
     Switch carga;
     CheckBox acepto_terminos;
@@ -64,13 +65,57 @@ public class MainActivity extends AppCompatActivity {
         debito = (RadioButton) findViewById(R.id.debito);
         tipo_tarjeta = (TextView) findViewById(R.id.tipo_tarjeta);
         radio = (RadioGroup) findViewById(R.id.radioGroup);
+        mensaje_exito = (TextView) findViewById(R.id.mensaje_exito);
 
         registrar.setEnabled(false);
         anio.setEnabled(false);
         ccv.setEnabled(false);
+        mensaje_exito.setVisibility(View.GONE);
         credito_inicial.setVisibility(View.GONE);
         skb.setVisibility(View.GONE);
 
+
+        acepto_terminos.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(acepto_terminos.isChecked()){
+                    registrar.setEnabled(true);
+                }else{
+                    registrar.setEnabled(false);
+                    mensaje_exito.setVisibility(View.GONE);
+                }
+            }
+        });
+
+       registrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(validar()){
+                    mensaje_exito.setVisibility(View.VISIBLE);
+                    String nombre_str = nombre.getText().toString();
+                    String contrasena_str = contrasena.getText().toString();
+                    String repetir_str = repetir_contrasena.getText().toString();
+                    String email_str = email.getText().toString();
+                    String num_tarjeta_str = num_tarjeta.getText().toString();
+                    String ccv_str = ccv.getText().toString();
+                    String cbu_str = cbu.getText().toString();
+                    String alias_str = alias_cbu.getText().toString();
+                    String mes_str = mes.getText().toString();
+                    String anio_str = anio.getText().toString();
+                    int skb_int = skb.getProgress();
+                    boolean credito_boolean = credito.isChecked();
+                    Calendar fecha_vencimiento = Calendar.getInstance();
+                    fecha_vencimiento.set(Integer.parseInt(anio_str), Integer.parseInt(mes_str), 1);
+                    ID++;
+
+                    CuentaBancaria cuenta = new CuentaBancaria(cbu_str, alias_str);
+                    Tarjeta tarjeta = new Tarjeta(num_tarjeta_str,ccv_str,fecha_vencimiento,credito_boolean);
+                    Usuario usuario = new Usuario(ID, nombre_str,contrasena_str,email_str, skb_int, tarjeta, cuenta);
+                }else {
+                    mensaje_exito.setVisibility(View.GONE);
+                }
+            }
+        });
         mes.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -99,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
         num_tarjeta.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(charSequence.toString().equals("")){
+                if(charSequence.toString().isEmpty()){
                     ccv.setEnabled(false);
                 }else{
                     ccv.setEnabled(true);
@@ -112,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if(editable.toString().equals("")){
+                if(editable.toString().isEmpty()){
                     ccv.setEnabled(false);
                 }else{
                     ccv.setEnabled(true);
@@ -120,68 +165,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
+        carga.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(carga.isChecked()){
+                    credito_inicial.setVisibility(View.VISIBLE);
+                    skb.setVisibility(View.VISIBLE);
 
-    public void onclick(View view) {
-        if(view.getId() == R.id.carga){
-            if(carga.isChecked()){
-                credito_inicial.setVisibility(View.VISIBLE);
-                skb.setVisibility(View.VISIBLE);
+                    credito_inicial.setText("Crédito inicial: " + skb.getProgress() + "/" + skb.getMax());
 
-                credito_inicial.setText("Crédito inicial: " + skb.getProgress() + "/" + skb.getMax());
+                    skb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                        @Override
+                        public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+                            credito_inicial.setText("Crédito inicial: " + progress + "/" + skb.getMax());
+                        }
 
-                skb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                    @Override
-                    public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
-                        credito_inicial.setText("Crédito inicial: " + progress + "/" + skb.getMax());
-                    }
+                        @Override
+                        public void onStartTrackingTouch(SeekBar seekBar) {
+                        }
 
-                    @Override
-                    public void onStartTrackingTouch(SeekBar seekBar) {
-                    }
-
-                    @Override
-                    public void onStopTrackingTouch(SeekBar seekBar) {
-                    }
-                });
-            }else{
-                credito_inicial.setVisibility(View.GONE);
-                skb.setVisibility(View.GONE);
+                        @Override
+                        public void onStopTrackingTouch(SeekBar seekBar) {
+                        }
+                    });
+                }else{
+                    credito_inicial.setVisibility(View.GONE);
+                    skb.setVisibility(View.GONE);
+                }
             }
-        }
+        });
 
-        if(view.getId() == R.id.terminos){
-            if(acepto_terminos.isChecked()){
-                registrar.setEnabled(true);
-            }else{
-                registrar.setEnabled(false);
-            }
-        }
-    }
 
-    public void Registrar(View v){
-        if(validar()){
-            Toast.makeText(this, "El registro fue exitoso!", Toast.LENGTH_SHORT).show();
-            String nombre_str = nombre.getText().toString();
-            String contrasena_str = contrasena.getText().toString();
-            String repetir_str = repetir_contrasena.getText().toString();
-            String email_str = email.getText().toString();
-            String num_tarjeta_str = num_tarjeta.getText().toString();
-            String ccv_str = ccv.getText().toString();
-            String cbu_str = cbu.getText().toString();
-            String alias_str = alias_cbu.getText().toString();
-            String mes_str = mes.getText().toString();
-            String anio_str = anio.getText().toString();
-            int skb_int = skb.getProgress();
-            boolean credito_boolean = credito.isChecked();
-            Calendar fecha = Calendar.getInstance();
-            fecha.set(Integer.parseInt(anio_str), Integer.parseInt(mes_str));
-            ID++;
-
-            CuentaBancaria cuenta = new CuentaBancaria(cbu_str, alias_str);
-            Tarjeta tarjeta = new Tarjeta(num_tarjeta_str,ccv_str,fecha,credito_boolean);
-            Usuario usuario = new Usuario(ID, nombre_str,contrasena_str,email_str, skb_int, tarjeta, cuenta);
-        }
     }
 
     public boolean validar(){
@@ -194,11 +208,6 @@ public class MainActivity extends AppCompatActivity {
         String mes_str = mes.getText().toString();
         String anio_str = anio.getText().toString();
         String expresion = "[^@]*(@[A-Za-z]{3}[^@]*)+";
-
-        int mes_int, anio_int;
-        mes_int = Integer.parseInt(mes_str);
-        anio_int = Integer.parseInt(anio_str);
-
 
         if(email_str.isEmpty()){
             email.setError("E-mail es un campo obligatorio");
@@ -222,14 +231,14 @@ public class MainActivity extends AppCompatActivity {
         if(mes_str.isEmpty()){
             mes.setError("Mes es un campo obligatorio");
             retorno = false;
-        }else if(mes_int>12 || mes_int<1){
+        }else if(Integer.parseInt(mes_str)>12 || Integer.parseInt(mes_str)<1){
             mes.setError("Mes no válido");
             retorno = false;
         }
         if(anio_str.isEmpty()){
             anio.setError("Año es un campo obligatorio");
             retorno = false;
-        }else if(calcularMeses(mes_int,anio_int)<4){
+        }else if(calcularMeses(Integer.parseInt(mes_str),Integer.parseInt(anio_str))<4){
             anio.setError("La fecha tiene que ser superior a 3 meses de la actual");
             retorno = false;
         }
@@ -245,8 +254,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Crédito inicial debe ser mayor a $0", Toast.LENGTH_SHORT).show();
             retorno = false;
         }
-
-
         return retorno;
     }
 
