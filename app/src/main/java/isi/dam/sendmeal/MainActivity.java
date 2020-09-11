@@ -172,12 +172,12 @@ public class MainActivity extends AppCompatActivity {
                     credito_inicial.setVisibility(View.VISIBLE);
                     skb.setVisibility(View.VISIBLE);
 
-                    credito_inicial.setText("Crédito inicial: " + skb.getProgress() + "/" + skb.getMax());
+                    credito_inicial.setText("Crédito inicial: $" + skb.getProgress() + "/$" + skb.getMax());
 
                     skb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                         @Override
                         public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
-                            credito_inicial.setText("Crédito inicial: " + progress + "/" + skb.getMax());
+                            credito_inicial.setText("Crédito inicial: $" + progress + "/$" + skb.getMax());
                         }
 
                         @Override
