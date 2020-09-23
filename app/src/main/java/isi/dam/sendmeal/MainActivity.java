@@ -2,10 +2,12 @@ package isi.dam.sendmeal;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -18,12 +20,14 @@ import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
 
 import org.w3c.dom.Text;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Pattern;
+
 
 import model.CuentaBancaria;
 import model.Tarjeta;
@@ -40,11 +44,16 @@ public class MainActivity extends AppCompatActivity {
     RadioButton credito, debito;
     RadioGroup radio;
     int ID = 0;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         nombre = (EditText) findViewById(R.id.nombre);
         contrasena = (EditText) findViewById(R.id.contraseña);
@@ -280,4 +289,22 @@ public class MainActivity extends AppCompatActivity {
 
         return diferencia;
     }
+
+   /* @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return false;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        final Intent anteriorHome = new Intent(this, HomeActivity.class);
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }*/
 }

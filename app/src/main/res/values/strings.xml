@@ -19,4 +19,7 @@
     <string name="hint_cbu">CBU</string>
     <string name="hint_alias_cbu">Alias CBU</string>
     <string name="exito">El registro fue exitoso!</string>
+    <string name="registrarme">Registrarme</string>
+    <string name="crear_item">crear item</string>
+    <string name="lista_de_items">lista de items</string>
 </resources>
