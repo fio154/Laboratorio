@@ -97,9 +97,9 @@ public class CrearItemActivity extends AppCompatActivity {
 
         for(int i=0; i<Plato.lista_platos.size(); i++){
 
-            String plato2 = Plato.lista_platos.get(i).toString().toLowerCase();
+            String plato2 = Plato.lista_platos.get(i).getTitulo().toLowerCase();
 
-            if(plato.equals(plato2))                return true;
+            if(plato.equals(plato2)) return true;
         }
 
         return false;
