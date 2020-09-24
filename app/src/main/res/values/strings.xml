@@ -22,4 +22,7 @@
     <string name="registrarme">Registrarme</string>
     <string name="crear_item">crear item</string>
     <string name="lista_de_items">lista de items</string>
+    <string name="nuevo_plato">Nuevo Plato</string>
+    <string name="hint_titulo">Título</string>
+    <string name="descripcion">Descripción</string>
 </resources>

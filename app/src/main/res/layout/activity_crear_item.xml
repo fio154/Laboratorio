@@ -18,7 +18,7 @@
         android:id="@+id/nuevo_plato"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nuevo Plato"
+        android:text="@string/nuevo_plato"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
     <EditText
@@ -26,14 +26,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Título"
+        android:hint="@string/hint_titulo"
         android:inputType="textPersonName" />
 
     <TextView
         android:id="@+id/tv_descripcion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Descripción "
+        android:text="@string/descripcion"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <EditText

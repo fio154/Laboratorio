@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:background="@drawable/bienvenido"
+    android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
+    <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/toolbar"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        xmlns:android="http://schemas.android.com/apk/res/android"/>
-
-    <TextView
-        android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Bienvenido!"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display3" />
+        android:layout_height="?attr/actionBarSize"
+        android:background="#FFFFFF" />
 
 </LinearLayout>

@@ -91,8 +91,6 @@ public class CrearItemActivity extends AppCompatActivity {
         calorias.setText(null);
     }
 
-    //Prueba
-
     public boolean platoRepetido(String plato){
 
         plato = plato.toLowerCase();
