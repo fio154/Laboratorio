@@ -15,6 +15,8 @@ import static isi.dam.sendmeal.R.menu.menu;
 
 public class HomeActivity extends AppCompatActivity {
 
+    // Esto es una prueba viejis
+
     Button registrarme, lista_items, crear_items;
     Toolbar toolbar;
 
