@@ -44,9 +44,13 @@ public class CrearItemActivity extends AppCompatActivity {
 
     public boolean validarDatos() {
         boolean validos = true;
+
         if(titulo.getText().toString().isEmpty()) {
             validos = false;
             titulo.setError("Campo obligatorio");
+        } else if(platoRepetido(titulo.getText().toString())){
+            validos = false;
+            titulo.setError("El plato ya existe");
         }
         if(descripcion.getText().toString().isEmpty()) {
             validos = false;
@@ -60,6 +64,7 @@ public class CrearItemActivity extends AppCompatActivity {
             validos = false;
             calorias.setError("Campo obligatorio");
         }
+
 
         return validos;
     }
@@ -84,5 +89,12 @@ public class CrearItemActivity extends AppCompatActivity {
         descripcion.setText(null);
         precio.setText(null);
         calorias.setText(null);
+    }
+
+    public boolean platoRepetido(String plato){
+
+        //for(int i=0; i<Plato.lista_platos)
+
+        return true;
     }
 }
