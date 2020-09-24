@@ -93,8 +93,15 @@ public class CrearItemActivity extends AppCompatActivity {
 
     public boolean platoRepetido(String plato){
 
-        //for(int i=0; i<Plato.lista_platos)
+        plato = plato.toLowerCase();
 
-        return true;
+        for(int i=0; i<Plato.lista_platos.size(); i++){
+
+            String plato2 = Plato.lista_platos.get(i).toString().toLowerCase();
+
+            if(plato.equals(plato2))                return true;
+        }
+
+        return false;
     }
 }
