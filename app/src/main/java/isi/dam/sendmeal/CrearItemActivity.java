@@ -28,7 +28,7 @@ public class CrearItemActivity extends AppCompatActivity {
 
         titulo = (EditText) findViewById(R.id.titulo);
         descripcion = (EditText) findViewById(R.id.descripcion);
-        precio = (EditText) findViewById(R.id.precio);
+        precio = (EditText) findViewById(R.id.precio_pedido);
         calorias = (EditText) findViewById(R.id.calorias);
         guardar = (Button) findViewById(R.id.btn_guardar);
 

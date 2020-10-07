@@ -44,7 +44,7 @@ public class AdapterDatosRecycler extends RecyclerView.Adapter<AdapterDatosRecyc
             super(itemView);
 
             plato = (TextView) itemView.findViewById(R.id.plato);
-            precio = (TextView) itemView.findViewById(R.id.precio);
+            precio = (TextView) itemView.findViewById(R.id.precio_pedido);
 
         }
 

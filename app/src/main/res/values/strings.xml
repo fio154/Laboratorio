@@ -25,4 +25,9 @@
     <string name="nuevo_plato">Nuevo Plato</string>
     <string name="hint_titulo">Título</string>
     <string name="descripcion">Descripción</string>
+    <string name="agregarPlatos">AGREGAR PLATOS</string>
+    <string name="direccionPedido">Dirección</string>
+    <string name="tipoEnvio1">Envío a domicilio</string>
+    <string name="tipoEnvio2">TakeAway</string>
+    <string name="confirmar">CONFIRMAR PEDIDO</string>
 </resources>

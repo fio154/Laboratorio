@@ -42,6 +42,7 @@ public class HomeActivity extends AppCompatActivity {
         final Intent siguienteMain = new Intent(this, MainActivity.class);
         final Intent siguienteCrearItems = new Intent(this, CrearItemActivity.class);
         final Intent siguienteListaItems = new Intent(this, ListaItemsActivity.class);
+        final Intent siguienteNuevoPedido = new Intent(this, PedidoActivity.class);
 
         switch(item.getItemId()){
             case R.id.registrame:
@@ -53,6 +54,8 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.lista_items:
                 startActivity(siguienteListaItems);
                 break;
+            case R.id.nuevo_pedido:
+                startActivity(siguienteNuevoPedido);
         }
 
         return super.onOptionsItemSelected(item);
