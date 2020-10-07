@@ -34,7 +34,7 @@ public class ListaItemsActivity extends AppCompatActivity {
 
         for(int i=0; i<Plato.lista_platos.size(); i++) {
             listaNombres.add(Plato.lista_platos.get(i).getTitulo());
-            listaPrecios.add((Plato.lista_platos.get(i).getPrecio()).toString() + "$");
+            listaPrecios.add("Precio: $"+(Plato.lista_platos.get(i).getPrecio()).toString());
         }
 
         AdapterDatosRecycler adapter = new AdapterDatosRecycler(listaNombres, listaPrecios);
