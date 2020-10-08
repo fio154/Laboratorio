@@ -14,7 +14,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"/>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/agregarPlato_btn"
         android:layout_width="312dp"
         android:layout_height="101dp"
         android:layout_marginStart="44dp"
@@ -33,7 +33,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/agregarPlato_btn" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/textInputEditText4"
@@ -75,7 +75,7 @@
         tools:layout_editor_absoluteX="5dp" />
 
     <Button
-        android:id="@+id/confirmar_btn"
+        android:id="@+id/confirmarPlato_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"

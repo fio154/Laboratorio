@@ -52,6 +52,8 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(siguienteCrearItems);
                 break;
             case R.id.lista_items:
+                String pantalla = "home";
+                siguienteListaItems.putExtra("pantalla", pantalla);
                 startActivity(siguienteListaItems);
                 break;
             case R.id.nuevo_pedido:

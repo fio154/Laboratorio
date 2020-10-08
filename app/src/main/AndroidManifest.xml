@@ -21,11 +21,10 @@
             android:name=".PedidoActivity"
             android:parentActivityName=".HomeActivity" />
         <activity
-            android:name=".ListaItemsActivity"
-            android:parentActivityName=".HomeActivity" />
-        <activity
             android:name=".CrearItemActivity"
             android:parentActivityName=".HomeActivity" />
+        <activity
+            android:name=".ListaItemsActivity"/>
         <activity
             android:name=".MainActivity"
             android:parentActivityName=".HomeActivity" />
