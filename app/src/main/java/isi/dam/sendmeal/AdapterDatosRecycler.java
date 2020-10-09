@@ -23,6 +23,7 @@ public class AdapterDatosRecycler extends RecyclerView.Adapter<AdapterDatosRecyc
     public AdapterDatosRecycler(ArrayList<String> listaNombres, ArrayList<String> listaPrecios, String pantallaAnterior) {
         this.listaNombres = listaNombres;
         this.listaPrecios = listaPrecios;
+        listaPlatosPedidos = new ArrayList<Plato>();
         this.pantallaAnterior = pantallaAnterior;
     }
 
@@ -55,7 +56,6 @@ public class AdapterDatosRecycler extends RecyclerView.Adapter<AdapterDatosRecyc
             precio = (TextView) itemView.findViewById(R.id.precio_pedido);
             pedir = (Button) itemView.findViewById(R.id.pedir_btn);
 
-
         }
 
         public void asignarDatos(String platos, String precios, String pantallaAnterior) {
@@ -64,7 +64,8 @@ public class AdapterDatosRecycler extends RecyclerView.Adapter<AdapterDatosRecyc
 
             if(pantallaAnterior.equals("home")){
                 pedir.setVisibility(View.GONE);
-            }else if(pantallaAnterior.equals("pedido")){
+            }
+            else if(pantallaAnterior.equals("pedido")){
                 pedir.setVisibility(View.VISIBLE);
             }
 
