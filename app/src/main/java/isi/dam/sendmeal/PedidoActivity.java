@@ -24,6 +24,7 @@ public class PedidoActivity extends AppCompatActivity {
     ArrayList<String> listaNombres, listaPrecios;
     RecyclerView recycler;
     Button agregarPlato;
+    ArrayList<Plato> listaPlatosPedidos;
     static final int REQUEST_CODE = 222;
 
     @Override
@@ -35,45 +36,47 @@ public class PedidoActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        recycler = (RecyclerView) findViewById(R.id.recycler_pedido);
-        recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
-        listaNombres = new ArrayList<String>();
-        listaPrecios = new ArrayList<String>();
-
-        for(int i = 0; i< Plato.lista_platos.size(); i++) {
-            listaNombres.add(Plato.lista_platos.get(i).getTitulo());
-            listaPrecios.add("$"+(Plato.lista_platos.get(i).getPrecio()).toString());
-        }
-
-        AdapterDatosPedido adapter = new AdapterDatosPedido(listaNombres, listaPrecios);
-        recycler.setAdapter(adapter);
-
-        agregarPlato = (Button) findViewById(R.id.agregarPlato_btn);
 
         final Intent siguienteListaItems = new Intent(this, ListaItemsActivity.class);
+
+        agregarPlato = (Button) findViewById(R.id.agregarPlato_btn);
 
         agregarPlato.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String pantalla = "pedido";
                 siguienteListaItems.putExtra("pantalla",pantalla);
-                //startActivity(siguienteListaItems);
                 startActivityForResult(siguienteListaItems, REQUEST_CODE);
             }
         });
 
     }
 
-   @Override
+    @Override
     protected void onActivityResult(int request_code, int result_code, Intent data) {
         super.onActivityResult(request_code, result_code, data);
 
         if(request_code == REQUEST_CODE){
             if(result_code == RESULT_OK){
-                //lo q hace el pedir
+                ArrayList<Plato> listaPlatos = data.getParcelableArrayListExtra("listaPlatos");
+
+                recycler = (RecyclerView) findViewById(R.id.recycler_pedido);
+                recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
+                listaNombres = new ArrayList<String>();
+                listaPrecios = new ArrayList<String>();
+
+                for(int i = 0; i< listaPlatos.size(); i++) {
+                    listaNombres.add(listaPlatos.get(i).getTitulo());
+                    listaPrecios.add("$"+(listaPlatos.get(i).getPrecio()).toString());
+                }
+
+                AdapterDatosPedido adapter = new AdapterDatosPedido(listaNombres, listaPrecios);
+                recycler.setAdapter(adapter);
+
             }else if(result_code == RESULT_CANCELED){
-                //lo q hace la flecha para atras
+                System.out.println("NO FUNCIONO");
             }
         }
     }

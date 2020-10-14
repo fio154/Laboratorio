@@ -17,13 +17,12 @@ import model.Plato;
 public class AdapterDatosRecycler extends RecyclerView.Adapter<AdapterDatosRecycler.PlatoViewHolder> {
 
     ArrayList<String> listaNombres, listaPrecios;
-    public static ArrayList<Plato> listaPlatosPedidos;
+    public static ArrayList<Plato> listaPlatosPedidos = new ArrayList<Plato>();
     String pantallaAnterior;
 
     public AdapterDatosRecycler(ArrayList<String> listaNombres, ArrayList<String> listaPrecios, String pantallaAnterior) {
         this.listaNombres = listaNombres;
         this.listaPrecios = listaPrecios;
-        listaPlatosPedidos = new ArrayList<Plato>();
         this.pantallaAnterior = pantallaAnterior;
     }
 

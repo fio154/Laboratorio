@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -19,9 +20,11 @@ public class ListaItemsActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     ArrayList<String> listaNombres, listaPrecios;
+    ArrayList<Plato> listaPlatosPedidos;
     RecyclerView recycler;
     String pantallaAnterior;
-    Button confirmarPlato;
+    Button confirmarPlato, pedir;
+    TextView plato;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,12 +62,14 @@ public class ListaItemsActivity extends AppCompatActivity {
             confirmarPlato.setVisibility(View.VISIBLE);
         }
 
+
         confirmarPlato.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //mandar info del plato pedido
-                //Intent intent = new Intent();
-                //setResult(RESULT_OK, intent);
+                Intent intent = new Intent();
+                intent.putParcelableArrayListExtra("listaPlatos", AdapterDatosRecycler.listaPlatosPedidos);
+                setResult(RESULT_OK, intent);
                 finish();
             }
         });
