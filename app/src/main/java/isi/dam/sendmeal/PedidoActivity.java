@@ -2,10 +2,17 @@ package isi.dam.sendmeal;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.loader.content.AsyncTaskLoader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.IntentService;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,7 +30,7 @@ public class PedidoActivity extends AppCompatActivity {
     Toolbar toolbar;
     ArrayList<String> listaNombres, listaPrecios;
     RecyclerView recycler;
-    Button agregarPlato;
+    Button agregarPlato, confirmarPedido;
     ArrayList<Plato> listaPlatosPedidos;
     static final int REQUEST_CODE = 222;
 
@@ -35,8 +42,6 @@ public class PedidoActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
 
         final Intent siguienteListaItems = new Intent(this, ListaItemsActivity.class);
 
@@ -50,6 +55,18 @@ public class PedidoActivity extends AppCompatActivity {
                 startActivityForResult(siguienteListaItems, REQUEST_CODE);
             }
         });
+
+        confirmarPedido = (Button) findViewById(R.id.confirmarPedido_btn);
+
+        confirmarPedido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                new Task1().execute("");
+
+            }
+        });
+
 
     }
 
@@ -80,6 +97,48 @@ public class PedidoActivity extends AppCompatActivity {
             }
         }
     }
+
+    class Task1 extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            try{
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return "funciono";
+        }
+        @Override
+        protected void onPostExecute(String result) {
+
+            System.out.println(result);
+            /*Intent notificationIntent = new Intent(this, MyNotificationPublisher.class);
+            // ...
+            alarmManager.set( ... );*/
+        }
+    }
+
+    public abstract class MyIntentService extends IntentService {
+        /**
+         * @param name
+         * @deprecated
+         */
+        public MyIntentService(String name) {
+            super(name);
+        }
+
+        @Override
+        public void onCreate() {
+            super.onCreate();
+            Broadcast br = new Broadcast();
+            IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+            filter.addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+            this.registerReceiver(br, filter);
+        }
+    }
+
+
 
 
 

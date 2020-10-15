@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="isi.dam.sendmeal">
 
     <application
@@ -29,5 +30,14 @@
             android:name=".MainActivity"
             android:parentActivityName=".HomeActivity" />
     </application>
+
+    <receiver android:name=".Broadcast" android:exported="true"
+        tools:ignore="WrongManifestParent">
+        <intent-filter>
+            <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            <action android:name="android.intent.action.INPUT_METHOD_CHANGED"/>
+        </intent-filter>
+    </receiver>
+
 
 </manifest>

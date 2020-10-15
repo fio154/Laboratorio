@@ -11,6 +11,10 @@ import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
+import model.Plato;
+
 import static isi.dam.sendmeal.R.menu.menu;
 
 public class HomeActivity extends AppCompatActivity {
@@ -57,6 +61,7 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(siguienteListaItems);
                 break;
             case R.id.nuevo_pedido:
+                AdapterDatosRecycler.listaPlatosPedidos = new ArrayList<Plato>();
                 startActivity(siguienteNuevoPedido);
         }
 

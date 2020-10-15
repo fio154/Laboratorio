@@ -20,7 +20,7 @@
         android:layout_height="wrap_content" />
 
     <Button
-        android:id="@+id/confirmarPlato_btn"
+        android:id="@+id/confirmarPedido_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="CONFIRMAR PLATOS" />

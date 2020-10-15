@@ -18,7 +18,7 @@
         android:layout_width="312dp"
         android:layout_height="101dp"
         android:layout_marginStart="44dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="20dp"
         android:text="@string/agregarPlatos"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
@@ -75,7 +75,7 @@
         tools:layout_editor_absoluteX="5dp" />
 
     <Button
-        android:id="@+id/confirmarPlato_btn"
+        android:id="@+id/confirmarPedido_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"

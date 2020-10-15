@@ -54,7 +54,7 @@ public class ListaItemsActivity extends AppCompatActivity {
         AdapterDatosRecycler adapter = new AdapterDatosRecycler(listaNombres, listaPrecios, pantallaAnterior);
         recycler.setAdapter(adapter);
 
-        confirmarPlato = (Button) findViewById(R.id.confirmarPlato_btn);
+        confirmarPlato = (Button) findViewById(R.id.confirmarPedido_btn);
 
         if(pantallaAnterior.equals("home")){
             confirmarPlato.setVisibility(View.GONE);
