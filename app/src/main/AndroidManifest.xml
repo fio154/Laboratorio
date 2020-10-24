@@ -29,15 +29,12 @@
         <activity
             android:name=".MainActivity"
             android:parentActivityName=".HomeActivity" />
+        <receiver android:name=".MyNotificationPublisher" android:exported="true">
+        </receiver>
+
     </application>
 
-    <receiver android:name=".Broadcast" android:exported="true"
-        tools:ignore="WrongManifestParent">
-        <intent-filter>
-            <action android:name="android.intent.action.BOOT_COMPLETED"/>
-            <action android:name="android.intent.action.INPUT_METHOD_CHANGED"/>
-        </intent-filter>
-    </receiver>
+
 
 
 </manifest>

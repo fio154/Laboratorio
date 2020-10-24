@@ -27,6 +27,7 @@ import model.Usuario;
 
 public class PedidoActivity extends AppCompatActivity {
 
+    Context contexto = this;
     Toolbar toolbar;
     ArrayList<String> listaNombres, listaPrecios;
     RecyclerView recycler;
@@ -62,7 +63,7 @@ public class PedidoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                new Task1().execute("");
+              new Task1().execute("");
 
             }
         });
@@ -107,36 +108,15 @@ public class PedidoActivity extends AppCompatActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            return "funciono";
+            return null;
         }
         @Override
         protected void onPostExecute(String result) {
-
-            System.out.println(result);
-            /*Intent notificationIntent = new Intent(this, MyNotificationPublisher.class);
-            // ...
-            alarmManager.set( ... );*/
+            Intent notificationIntent = new Intent(contexto, MyNotificationPublisher.class);
+            contexto.sendBroadcast(notificationIntent);
         }
     }
 
-    public abstract class MyIntentService extends IntentService {
-        /**
-         * @param name
-         * @deprecated
-         */
-        public MyIntentService(String name) {
-            super(name);
-        }
-
-        @Override
-        public void onCreate() {
-            super.onCreate();
-            Broadcast br = new Broadcast();
-            IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-            filter.addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED);
-            this.registerReceiver(br, filter);
-        }
-    }
 
 
 
