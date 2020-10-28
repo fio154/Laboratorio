@@ -66,8 +66,7 @@
                 android:text="Ver"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display2"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/pedir_btn"
-                app:layout_constraintHorizontal_bias="0.085"
+                app:layout_constraintEnd_toStartOf="@+id/buttonDisminuir"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/precio_pedido"
                 app:layout_constraintVertical_bias="0.0" />
@@ -79,40 +78,40 @@
                 android:layout_marginEnd="8dp"
                 android:text="PEDIR"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/buttonAumentar"
                 app:layout_constraintTop_toBottomOf="@+id/precio_pedido" />
 
             <Button
                 android:id="@+id/buttonAumentar"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
                 android:text="+"
                 app:layout_constraintBottom_toBottomOf="@+id/pedir_btn"
-                app:layout_constraintTop_toTopOf="@+id/pedir_btn"
-                tools:layout_editor_absoluteX="217dp" />
+                app:layout_constraintEnd_toStartOf="@+id/pedir_btn"
+                app:layout_constraintTop_toBottomOf="@+id/precio_pedido" />
 
             <Button
                 android:id="@+id/buttonDisminuir"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="41dp"
+                android:layout_marginEnd="24dp"
                 android:text="-"
                 app:layout_constraintBottom_toBottomOf="@+id/buttonAumentar"
-                app:layout_constraintStart_toEndOf="@+id/ver"
-                app:layout_constraintTop_toTopOf="@+id/buttonAumentar" />
+                app:layout_constraintEnd_toStartOf="@+id/cantidadPedido"
+                app:layout_constraintTop_toBottomOf="@+id/precio_pedido" />
 
             <TextView
                 android:id="@+id/cantidadPedido"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
                 android:text="0"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="#FFFFFF"
                 android:textSize="30sp"
                 app:layout_constraintBottom_toBottomOf="@+id/buttonAumentar"
                 app:layout_constraintEnd_toStartOf="@+id/buttonAumentar"
-                app:layout_constraintStart_toEndOf="@+id/buttonDisminuir"
-                app:layout_constraintTop_toTopOf="@+id/buttonAumentar" />
+                app:layout_constraintTop_toBottomOf="@+id/precio_pedido" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

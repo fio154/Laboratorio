@@ -3,8 +3,7 @@ package isi.dam.sendmeal;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,12 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import model.Plato;
-
 public class AdapterDatosPedido extends RecyclerView.Adapter<AdapterDatosPedido.PedidoViewHolder> {
 
     ArrayList<String> listaNombres, listaPrecios, listaCantidades;
-    ArrayList<Button> borrar;
+    ArrayList<ImageButton> borrar;
 
     public AdapterDatosPedido(ArrayList<String> listaCantidades, ArrayList<String> listaNombres, ArrayList<String> listaPrecios) {
         this.listaCantidades = listaCantidades;
@@ -30,9 +27,9 @@ public class AdapterDatosPedido extends RecyclerView.Adapter<AdapterDatosPedido.
     @Override
     public PedidoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.pedido, null, false);
-        borrar = new ArrayList<Button>();
+        borrar = new ArrayList<ImageButton>();
         for(int i=0; i < listaNombres.size(); i++) {
-            Button borrar_aux = (Button) view.findViewById(R.id.buttonBorrar);
+            ImageButton borrar_aux = (ImageButton) view.findViewById(R.id.buttonBorrar);
             final int finalI = i;
             borrar_aux.setOnClickListener(new View.OnClickListener() {
                 @Override
