@@ -16,6 +16,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,10 +30,12 @@ public class PedidoActivity extends AppCompatActivity {
 
     Context contexto = this;
     Toolbar toolbar;
-    ArrayList<String> listaNombres, listaPrecios;
+    ArrayList<String> listaNombres, listaPrecios, listaCantidades;
+    ArrayList<Double> listaPrecios_double;
     RecyclerView recycler;
     Button agregarPlato, confirmarPedido;
     ArrayList<Plato> listaPlatosPedidos;
+    TextView total;
     static final int REQUEST_CODE = 222;
 
     @Override
@@ -47,7 +50,6 @@ public class PedidoActivity extends AppCompatActivity {
         final Intent siguienteListaItems = new Intent(this, ListaItemsActivity.class);
 
         agregarPlato = (Button) findViewById(R.id.agregarPlato_btn);
-
         agregarPlato.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,16 +60,14 @@ public class PedidoActivity extends AppCompatActivity {
         });
 
         confirmarPedido = (Button) findViewById(R.id.confirmarPedido_btn);
-
         confirmarPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
               new Task1().execute("");
-
             }
         });
 
+        total = (TextView) findViewById(R.id.total);
 
     }
 
@@ -84,14 +84,32 @@ public class PedidoActivity extends AppCompatActivity {
 
                 listaNombres = new ArrayList<String>();
                 listaPrecios = new ArrayList<String>();
+                listaCantidades = new ArrayList<String>();
+                listaPrecios_double = new ArrayList<Double>();
 
-                for(int i = 0; i< listaPlatos.size(); i++) {
+                for(int i = 0; i < listaPlatos.size(); i++) {
+                    int aux = 1;
+                    int j = 0;
+                    for(j = i; j < listaPlatos.size() - 1; j++) {
+                        if (listaPlatos.get(j).getTitulo().equals(listaPlatos.get(j+1).getTitulo())) {
+                            aux += 1;
+                        }
+                    }
+                    i = j;
+                    listaCantidades.add(Integer.toString(aux));
                     listaNombres.add(listaPlatos.get(i).getTitulo());
+                    listaPrecios_double.add(listaPlatos.get(i).getPrecio());
                     listaPrecios.add("$"+(listaPlatos.get(i).getPrecio()).toString());
                 }
 
-                AdapterDatosPedido adapter = new AdapterDatosPedido(listaNombres, listaPrecios);
+                AdapterDatosPedido adapter = new AdapterDatosPedido(listaCantidades, listaNombres, listaPrecios);
                 recycler.setAdapter(adapter);
+
+                Double total_aux = 0.0;
+                for(int j = 0; j < listaPrecios.size(); j++) {
+                    total_aux += listaPrecios_double.get(j);
+                };
+                total.setText(String.valueOf(total_aux));
 
             }else if(result_code == RESULT_CANCELED){
                 System.out.println("NO FUNCIONO");

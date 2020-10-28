@@ -1,20 +1,27 @@
 package isi.dam.sendmeal;
 
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.TextView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.Button;
+import android.widget.TextView;
 
-        import androidx.annotation.NonNull;
-        import androidx.recyclerview.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
-        import java.util.ArrayList;
+import java.util.ArrayList;
+import java.util.Collections;
+
+import model.Plato;
 
 public class AdapterDatosPedido extends RecyclerView.Adapter<AdapterDatosPedido.PedidoViewHolder> {
 
-    ArrayList<String> listaNombres, listaPrecios;
+    ArrayList<String> listaNombres, listaPrecios, listaCantidades;
+    ArrayList<Button> borrar;
 
-    public AdapterDatosPedido(ArrayList<String> listaNombres, ArrayList<String> listaPrecios) {
+    public AdapterDatosPedido(ArrayList<String> listaCantidades, ArrayList<String> listaNombres, ArrayList<String> listaPrecios) {
+        this.listaCantidades = listaCantidades;
         this.listaNombres = listaNombres;
         this.listaPrecios = listaPrecios;
     }
@@ -23,12 +30,31 @@ public class AdapterDatosPedido extends RecyclerView.Adapter<AdapterDatosPedido.
     @Override
     public PedidoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.pedido, null, false);
+        borrar = new ArrayList<Button>();
+        for(int i=0; i < listaNombres.size(); i++) {
+            Button borrar_aux = (Button) view.findViewById(R.id.buttonBorrar);
+            final int finalI = i;
+            borrar_aux.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String plato_a_eliminar = listaNombres.get(finalI);
+
+                    for(int j = 0; j<AdapterDatosRecycler.listaPlatosPedidos.size(); j++) {
+                        if(AdapterDatosRecycler.listaPlatosPedidos.get(j).getTitulo().equals(plato_a_eliminar)) {
+                            AdapterDatosRecycler.listaPlatosPedidos.removeAll(Collections.singleton(AdapterDatosRecycler.listaPlatosPedidos.get(j)));
+                        }
+                    }
+                }
+            });
+            borrar.add(borrar_aux);
+        }
+
         return new PedidoViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull PedidoViewHolder holder, int position) {
-        holder.asignarDatos(listaNombres.get(position), listaPrecios.get(position));
+        holder.asignarDatos(listaCantidades.get(position) ,listaNombres.get(position), listaPrecios.get(position));
     }
 
     @Override
@@ -38,17 +64,19 @@ public class AdapterDatosPedido extends RecyclerView.Adapter<AdapterDatosPedido.
 
     public class PedidoViewHolder extends RecyclerView.ViewHolder {
 
-        TextView plato, precio;
+        TextView plato, precio, cantidad;
 
         public PedidoViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            cantidad = (TextView) itemView.findViewById(R.id.cantidad);
             plato = (TextView) itemView.findViewById(R.id.nombre_pedido);
             precio = (TextView) itemView.findViewById(R.id.precio_pedido);
 
         }
 
-        public void asignarDatos(String platos, String precios) {
+        public void asignarDatos(String cantidades, String platos, String precios) {
+            cantidad.setText(cantidades);
             plato.setText(platos);
             precio.setText(precios);
         }

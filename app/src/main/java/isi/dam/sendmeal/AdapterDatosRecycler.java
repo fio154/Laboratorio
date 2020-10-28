@@ -45,17 +45,22 @@ public class AdapterDatosRecycler extends RecyclerView.Adapter<AdapterDatosRecyc
 
     public class PlatoViewHolder extends RecyclerView.ViewHolder {
 
-        TextView plato, precio;
-        Button pedir;
+        TextView plato, precio, cantidad;
+        Button pedir, aumentarCantidad, disminuirCantidad;
 
         public PlatoViewHolder(@NonNull View itemView) {
             super(itemView);
 
             plato = (TextView) itemView.findViewById(R.id.plato);
             precio = (TextView) itemView.findViewById(R.id.precio_pedido);
+            cantidad = (TextView) itemView.findViewById(R.id.cantidadPedido);
             pedir = (Button) itemView.findViewById(R.id.pedir_btn);
+            aumentarCantidad = (Button) itemView.findViewById(R.id.buttonAumentar);
+            disminuirCantidad = (Button) itemView.findViewById(R.id.buttonDisminuir);
 
         }
+
+
 
         public void asignarDatos(String platos, String precios, String pantallaAnterior) {
             plato.setText(platos);
@@ -63,6 +68,9 @@ public class AdapterDatosRecycler extends RecyclerView.Adapter<AdapterDatosRecyc
 
             if(pantallaAnterior.equals("home")){
                 pedir.setVisibility(View.GONE);
+                cantidad.setVisibility(View.GONE);
+                aumentarCantidad.setVisibility(View.GONE);
+                disminuirCantidad.setVisibility(View.GONE);
             }
             else if(pantallaAnterior.equals("pedido")){
                 pedir.setVisibility(View.VISIBLE);
@@ -73,9 +81,31 @@ public class AdapterDatosRecycler extends RecyclerView.Adapter<AdapterDatosRecyc
                 public void onClick(View view) {
                     for(int i=0; i<Plato.lista_platos.size(); i++){
                         if(Plato.lista_platos.get(i).getTitulo().equals(plato.getText().toString())){
-                            listaPlatosPedidos.add(Plato.lista_platos.get(i));
+                            for(int j=0; j<Integer.parseInt(cantidad.getText().toString()); j++) {
+                                listaPlatosPedidos.add(Plato.lista_platos.get(i));
+                            }
                         }
                     }
+                }
+            });
+
+            aumentarCantidad.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                   Integer cant_int = Integer.parseInt(cantidad.getText().toString());
+                   cant_int ++;
+                   String cant = Integer.toString(cant_int);
+                   cantidad.setText(cant);
+                }
+            });
+
+            disminuirCantidad.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Integer cant_int = Integer.parseInt(cantidad.getText().toString());
+                    if(cant_int>0) cant_int --;
+                    String cant = Integer.toString(cant_int);
+                    cantidad.setText(cant);
                 }
             });
 
