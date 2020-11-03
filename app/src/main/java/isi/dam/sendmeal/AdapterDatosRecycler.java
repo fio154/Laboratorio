@@ -60,8 +60,6 @@ public class AdapterDatosRecycler extends RecyclerView.Adapter<AdapterDatosRecyc
 
         }
 
-
-
         public void asignarDatos(String platos, String precios, String pantallaAnterior) {
             plato.setText(platos);
             precio.setText(precios);
