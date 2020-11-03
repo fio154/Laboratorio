@@ -35,7 +35,6 @@ public class AdapterDatosPedido extends RecyclerView.Adapter<AdapterDatosPedido.
                 @Override
                 public void onClick(View view) {
                     String plato_a_eliminar = listaNombres.get(finalI);
-
                     for(int j = 0; j<AdapterDatosRecycler.listaPlatosPedidos.size(); j++) {
                         if(AdapterDatosRecycler.listaPlatosPedidos.get(j).getTitulo().equals(plato_a_eliminar)) {
                             AdapterDatosRecycler.listaPlatosPedidos.removeAll(Collections.singleton(AdapterDatosRecycler.listaPlatosPedidos.get(j)));
@@ -51,7 +50,7 @@ public class AdapterDatosPedido extends RecyclerView.Adapter<AdapterDatosPedido.
 
     @Override
     public void onBindViewHolder(@NonNull PedidoViewHolder holder, int position) {
-        holder.asignarDatos(listaCantidades.get(position) ,listaNombres.get(position), listaPrecios.get(position));
+        holder.asignarDatos(listaCantidades.get(position), listaNombres.get(position), listaPrecios.get(position));
     }
 
     @Override

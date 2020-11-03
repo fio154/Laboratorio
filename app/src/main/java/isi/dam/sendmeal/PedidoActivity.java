@@ -2,29 +2,27 @@ package isi.dam.sendmeal;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.loader.content.AsyncTaskLoader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.IntentService;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.regex.Pattern;
 
-import model.CuentaBancaria;
+import model.Pedido;
 import model.Plato;
-import model.Tarjeta;
-import model.Usuario;
 
 public class PedidoActivity extends AppCompatActivity {
 
@@ -35,8 +33,10 @@ public class PedidoActivity extends AppCompatActivity {
     RecyclerView recycler;
     Button agregarPlato, confirmarPedido;
     ArrayList<Plato> listaPlatosPedidos;
-    TextView total;
+    TextView total, email, direccion;
+    RadioButton envioDomicilio, takeAway;
     static final int REQUEST_CODE = 222;
+    AdapterDatosPedido adapterPedido;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,12 @@ public class PedidoActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        email = (TextView) findViewById(R.id.mail_pedido);
+        direccion = (TextView) findViewById(R.id.direccion_pedido);
+        envioDomicilio = (RadioButton) findViewById(R.id.envio_domicilio);
+        takeAway = (RadioButton) findViewById(R.id.take_away);
+        total = (TextView) findViewById(R.id.total);
 
         final Intent siguienteListaItems = new Intent(this, ListaItemsActivity.class);
 
@@ -63,11 +69,12 @@ public class PedidoActivity extends AppCompatActivity {
         confirmarPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              new Task1().execute("");
+                if(validar()) {
+                    new Task1().execute("");
+                }
             }
         });
 
-        total = (TextView) findViewById(R.id.total);
 
     }
 
@@ -87,23 +94,29 @@ public class PedidoActivity extends AppCompatActivity {
                 listaCantidades = new ArrayList<String>();
                 listaPrecios_double = new ArrayList<Double>();
 
+                ArrayList<Plato> listaPlatosAuxiliar = new ArrayList<Plato>();
+
                 for(int i = 0; i < listaPlatos.size(); i++) {
-                    int aux = 1;
-                    int j = 0;
-                    for(j = i; j < listaPlatos.size() - 1; j++) {
-                        if (listaPlatos.get(j).getTitulo().equals(listaPlatos.get(j+1).getTitulo())) {
-                            aux += 1;
+                    int contador = 0;
+                    for(int j=0; j < listaPlatos.size(); j++) {
+                        if (listaPlatos.get(i).getTitulo().equals(listaPlatos.get(j).getTitulo())) {
+                            contador += 1;
                         }
                     }
-                    i = j;
-                    listaCantidades.add(Integer.toString(aux));
-                    listaNombres.add(listaPlatos.get(i).getTitulo());
-                    listaPrecios_double.add(listaPlatos.get(i).getPrecio());
-                    listaPrecios.add("$"+(listaPlatos.get(i).getPrecio()).toString());
+                    if(!listaNombres.contains(listaPlatos.get(i).getTitulo())) {
+                        listaCantidades.add(Integer.toString(contador));
+                        listaNombres.add(listaPlatos.get(i).getTitulo());
+                        listaPrecios_double.add(listaPlatos.get(i).getPrecio());
+                        listaPrecios.add("$"+(listaPlatos.get(i).getPrecio()).toString());
+                    }
                 }
 
-                AdapterDatosPedido adapter = new AdapterDatosPedido(listaCantidades, listaNombres, listaPrecios);
-                recycler.setAdapter(adapter);
+                Log.i("PLATOS", listaPlatos.toString());
+                Log.i("CANTIDAD", listaCantidades.toString());
+                Log.i("NOMBRES", listaNombres.toString());
+                Log.i("Precios", listaPrecios.toString());
+                adapterPedido = new AdapterDatosPedido(listaCantidades, listaNombres, listaPrecios);
+                recycler.setAdapter(adapterPedido);
 
                 Double total_aux = 0.0;
                 for(int j = 0; j < listaPrecios.size(); j++) {
@@ -111,7 +124,7 @@ public class PedidoActivity extends AppCompatActivity {
                 };
                 total.setText(String.valueOf(total_aux));
 
-            }else if(result_code == RESULT_CANCELED){
+            } else if(result_code == RESULT_CANCELED){
                 System.out.println("NO FUNCIONO");
             }
         }
@@ -130,12 +143,60 @@ public class PedidoActivity extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(String result) {
-            Intent notificationIntent = new Intent(contexto, MyNotificationPublisher.class);
-            contexto.sendBroadcast(notificationIntent);
+                Pedido nuevoPedido = new Pedido();
+                nuevoPedido.setPlatos(AdapterDatosRecycler.listaPlatosPedidos);
+                AdapterDatosRecycler.listaPlatosPedidos.clear();
+
+                nuevoPedido.setDireccion(direccion.getText().toString());
+                nuevoPedido.setEmail(email.getText().toString());
+                nuevoPedido.setParaEnviar(envioDomicilio.isSelected());
+
+                Intent notificationIntent = new Intent(contexto, MyNotificationPublisher.class);
+                contexto.sendBroadcast(notificationIntent);
+                direccion.setText(null);
+                email.setText(null);
+                total.setText("0.0");
+                envioDomicilio.setChecked(false);
+                takeAway.setChecked(false);
+                adapterPedido.listaNombres.clear();
+                adapterPedido.listaCantidades.clear();
+                adapterPedido.listaPrecios.clear();
+                adapterPedido.notifyDataSetChanged();
+
+
         }
     }
 
+    public boolean validar(){
 
+        boolean retorno = true;
+        String email_str = email.getText().toString();
+        String direccion_str = direccion.getText().toString();
+        String expresion = "[^@]*(@[A-Za-z]{3}[^@]*)+";
+
+        if(email_str.isEmpty()){
+            email.setError("E-mail es un campo obligatorio");
+            retorno = false;
+        }else if(!Pattern.matches(expresion,email_str)){
+            email.setError("Debe contener al menos un @ y 3 letras después de este");
+            retorno = false;
+        }
+
+        if(direccion_str.isEmpty()){
+            direccion.setError("Dirección es un ampo obligatorio");
+            retorno = false;
+        }
+
+        if(AdapterDatosRecycler.listaPlatosPedidos.isEmpty()){
+            Toast.makeText(this, "Debe agregar al menos un plato", Toast.LENGTH_SHORT).show();
+            retorno = false;
+        }else if(!envioDomicilio.isChecked() && !takeAway.isChecked()){
+            Toast.makeText(this, "Debe seleccionar una forma de envio", Toast.LENGTH_SHORT).show();
+            retorno = false;
+        }
+
+        return retorno;
+    }
 
 
 

@@ -42,17 +42,17 @@
         android:layout_height="67dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputEditText4">
+        app:layout_constraintTop_toBottomOf="@+id/direccion_pedido">
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/envio_domicilio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/tipoEnvio1"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <RadioButton
-            android:id="@+id/radioButton3"
+            android:id="@+id/take_away"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/tipoEnvio2"
@@ -60,7 +60,7 @@
     </RadioGroup>
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/textInputEditText2"
+        android:id="@+id/mail_pedido"
         android:layout_width="match_parent"
         android:layout_height="47dp"
         android:layout_marginTop="32dp"
@@ -69,12 +69,12 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/textInputEditText4"
+        android:id="@+id/direccion_pedido"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:hint="@string/direccionPedido"
-        app:layout_constraintTop_toBottomOf="@+id/textInputEditText2"
+        app:layout_constraintTop_toBottomOf="@+id/mail_pedido"
         tools:layout_editor_absoluteX="0dp" />
 
     <Button
@@ -107,9 +107,9 @@
         android:layout_marginBottom="4dp"
         android:text="TOTAL"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/textInputEditText2"
-        app:layout_constraintEnd_toEndOf="@+id/textInputEditText2"
-        app:layout_constraintStart_toStartOf="@+id/textInputEditText2"
+        app:layout_constraintBottom_toTopOf="@+id/mail_pedido"
+        app:layout_constraintEnd_toEndOf="@+id/mail_pedido"
+        app:layout_constraintStart_toStartOf="@+id/mail_pedido"
         app:layout_constraintTop_toBottomOf="@+id/recycler_pedido" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

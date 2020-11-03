@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -20,7 +21,6 @@ public class ListaItemsActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     ArrayList<String> listaNombres, listaPrecios;
-    ArrayList<Plato> listaPlatosPedidos;
     RecyclerView recycler;
     String pantallaAnterior;
     Button confirmarPlato, pedir;
@@ -51,7 +51,7 @@ public class ListaItemsActivity extends AppCompatActivity {
             listaPrecios.add("Precio: $" + (Plato.lista_platos.get(i).getPrecio()).toString());
         }
 
-        AdapterDatosRecycler adapter = new AdapterDatosRecycler(listaNombres, listaPrecios, pantallaAnterior);
+        final AdapterDatosRecycler adapter = new AdapterDatosRecycler(listaNombres, listaPrecios, pantallaAnterior);
         recycler.setAdapter(adapter);
 
         confirmarPlato = (Button) findViewById(R.id.confirmarPedido_btn);
@@ -66,15 +66,21 @@ public class ListaItemsActivity extends AppCompatActivity {
         confirmarPlato.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //mandar info del plato pedido
+                for(int i=0; i<Plato.lista_platos.size(); i++) {
+                    for(int j=0; j < Integer.parseInt(adapter.listaCantidades.get(i).getText().toString()); j++) {
+                        if(Plato.lista_platos.get(i).getTitulo().equals(adapter.listaNombres.get(i))){
+                            AdapterDatosRecycler.listaPlatosPedidos.add(Plato.lista_platos.get(i));
+                        }
+                    }
+                }
+                Log.i("LISTA", AdapterDatosRecycler.listaPlatosPedidos.toString());
                 Intent intent = new Intent();
                 intent.putParcelableArrayListExtra("listaPlatos", AdapterDatosRecycler.listaPlatosPedidos);
                 setResult(RESULT_OK, intent);
                 finish();
-            }
-        });
-
-    }
+                }
+            });
+        }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
