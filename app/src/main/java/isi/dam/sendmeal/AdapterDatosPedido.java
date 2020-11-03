@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -27,7 +28,7 @@ public class AdapterDatosPedido extends RecyclerView.Adapter<AdapterDatosPedido.
     @Override
     public PedidoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.pedido, null, false);
-        borrar = new ArrayList<ImageButton>();
+        /*borrar = new ArrayList<ImageButton>();
         for(int i=0; i < listaNombres.size(); i++) {
             ImageButton borrar_aux = (ImageButton) view.findViewById(R.id.buttonBorrar);
             final int finalI = i;
@@ -43,7 +44,7 @@ public class AdapterDatosPedido extends RecyclerView.Adapter<AdapterDatosPedido.
                 }
             });
             borrar.add(borrar_aux);
-        }
+        }*/
 
         return new PedidoViewHolder(view);
     }
@@ -61,6 +62,7 @@ public class AdapterDatosPedido extends RecyclerView.Adapter<AdapterDatosPedido.
     public class PedidoViewHolder extends RecyclerView.ViewHolder {
 
         TextView plato, precio, cantidad;
+        RelativeLayout layoutBorrar;
 
         public PedidoViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -68,6 +70,7 @@ public class AdapterDatosPedido extends RecyclerView.Adapter<AdapterDatosPedido.
             cantidad = (TextView) itemView.findViewById(R.id.cantidad);
             plato = (TextView) itemView.findViewById(R.id.nombre_pedido);
             precio = (TextView) itemView.findViewById(R.id.precio_pedido);
+            layoutBorrar = (RelativeLayout) itemView.findViewById(R.id.layoutABorrar);
 
         }
 
@@ -76,5 +79,24 @@ public class AdapterDatosPedido extends RecyclerView.Adapter<AdapterDatosPedido.
             plato.setText(platos);
             precio.setText(precios);
         }
+
     }
+
+    public void removeItem(int position){
+        listaNombres.remove(position);
+        listaCantidades.remove(position);
+        listaPrecios.remove(position);
+        notifyItemRemoved(position);
+
+        for(int i=0; i < listaNombres.size(); i++) {
+            String plato_a_eliminar = listaNombres.get(i);
+            for(int j = 0; j<AdapterDatosRecycler.listaPlatosPedidos.size(); j++) {
+                   if(AdapterDatosRecycler.listaPlatosPedidos.get(j).getTitulo().equals(plato_a_eliminar)) {
+                       AdapterDatosRecycler.listaPlatosPedidos.removeAll(Collections.singleton(AdapterDatosRecycler.listaPlatosPedidos.get(j)));
+                   }
+            }
+        }
+    }
+
+
 }

@@ -2,6 +2,7 @@ package isi.dam.sendmeal;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,7 +25,7 @@ import java.util.regex.Pattern;
 import model.Pedido;
 import model.Plato;
 
-public class PedidoActivity extends AppCompatActivity {
+public class PedidoActivity extends AppCompatActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
 
     Context contexto = this;
     Toolbar toolbar;
@@ -118,6 +119,12 @@ public class PedidoActivity extends AppCompatActivity {
                 adapterPedido = new AdapterDatosPedido(listaCantidades, listaNombres, listaPrecios);
                 recycler.setAdapter(adapterPedido);
 
+                ItemTouchHelper.SimpleCallback simpleCallback =
+                        new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, PedidoActivity.this);
+
+                new ItemTouchHelper(simpleCallback).attachToRecyclerView(recycler);
+
+
                 Double total_aux = 0.0;
                 for(int j = 0; j < listaPrecios.size(); j++) {
                     total_aux += listaPrecios_double.get(j);
@@ -128,6 +135,11 @@ public class PedidoActivity extends AppCompatActivity {
                 System.out.println("NO FUNCIONO");
             }
         }
+    }
+
+    @Override
+    public void onSwipe(RecyclerView.ViewHolder viewHolder, int direction, int position) {
+        adapterPedido.removeItem(viewHolder.getAdapterPosition());
     }
 
     class Task1 extends AsyncTask<String, Void, String> {
@@ -163,7 +175,6 @@ public class PedidoActivity extends AppCompatActivity {
                 adapterPedido.listaPrecios.clear();
                 adapterPedido.notifyDataSetChanged();
 
-
         }
     }
 
@@ -197,8 +208,5 @@ public class PedidoActivity extends AppCompatActivity {
 
         return retorno;
     }
-
-
-
 
 }
