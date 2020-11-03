@@ -17,12 +17,14 @@ import model.Plato;
 public class AdapterDatosRecycler extends RecyclerView.Adapter<AdapterDatosRecycler.PlatoViewHolder> {
 
     ArrayList<String> listaNombres, listaPrecios;
+    ArrayList<TextView> listaCantidades;
     public static ArrayList<Plato> listaPlatosPedidos = new ArrayList<Plato>();
     String pantallaAnterior;
 
     public AdapterDatosRecycler(ArrayList<String> listaNombres, ArrayList<String> listaPrecios, String pantallaAnterior) {
         this.listaNombres = listaNombres;
         this.listaPrecios = listaPrecios;
+        this.listaCantidades = new ArrayList<TextView>();
         this.pantallaAnterior = pantallaAnterior;
     }
 
@@ -46,7 +48,7 @@ public class AdapterDatosRecycler extends RecyclerView.Adapter<AdapterDatosRecyc
     public class PlatoViewHolder extends RecyclerView.ViewHolder {
 
         TextView plato, precio, cantidad;
-        Button pedir, aumentarCantidad, disminuirCantidad;
+        Button aumentarCantidad, disminuirCantidad;
 
         public PlatoViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -54,40 +56,26 @@ public class AdapterDatosRecycler extends RecyclerView.Adapter<AdapterDatosRecyc
             plato = (TextView) itemView.findViewById(R.id.plato);
             precio = (TextView) itemView.findViewById(R.id.precio_pedido);
             cantidad = (TextView) itemView.findViewById(R.id.cantidadPedido);
-            pedir = (Button) itemView.findViewById(R.id.pedir_btn);
+            listaCantidades.add(cantidad);
             aumentarCantidad = (Button) itemView.findViewById(R.id.buttonAumentar);
             disminuirCantidad = (Button) itemView.findViewById(R.id.buttonDisminuir);
 
         }
-
-
 
         public void asignarDatos(String platos, String precios, String pantallaAnterior) {
             plato.setText(platos);
             precio.setText(precios);
 
             if(pantallaAnterior.equals("home")){
-                pedir.setVisibility(View.GONE);
                 cantidad.setVisibility(View.GONE);
                 aumentarCantidad.setVisibility(View.GONE);
                 disminuirCantidad.setVisibility(View.GONE);
             }
             else if(pantallaAnterior.equals("pedido")){
-                pedir.setVisibility(View.VISIBLE);
+                cantidad.setVisibility(View.VISIBLE);
+                aumentarCantidad.setVisibility(View.VISIBLE);
+                disminuirCantidad.setVisibility(View.VISIBLE);
             }
-
-            pedir.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    for(int i=0; i<Plato.lista_platos.size(); i++){
-                        if(Plato.lista_platos.get(i).getTitulo().equals(plato.getText().toString())){
-                            for(int j=0; j<Integer.parseInt(cantidad.getText().toString()); j++) {
-                                listaPlatosPedidos.add(Plato.lista_platos.get(i));
-                            }
-                        }
-                    }
-                }
-            });
 
             aumentarCantidad.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -108,7 +96,6 @@ public class AdapterDatosRecycler extends RecyclerView.Adapter<AdapterDatosRecyc
                     cantidad.setText(cant);
                 }
             });
-
         }
     }
 }

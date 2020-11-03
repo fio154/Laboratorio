@@ -12,6 +12,10 @@ public class Pedido implements Parcelable {
     private String direccion;
     private Boolean paraEnviar;
 
+    public Pedido() {
+
+    }
+
     public ArrayList<Plato> getPlatos() {
         return platos;
     }
