@@ -5,7 +5,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -20,7 +23,7 @@ import model.Plato;
 public class ListaItemsActivity extends AppCompatActivity {
 
     Toolbar toolbar;
-    ArrayList<String> listaNombres, listaPrecios;
+    ArrayList<String> listaNombres, listaPrecios, listaDescripciones;
     RecyclerView recycler;
     String pantallaAnterior;
     Button confirmarPlato, pedir;
@@ -41,6 +44,7 @@ public class ListaItemsActivity extends AppCompatActivity {
 
         listaNombres = new ArrayList<String>();
         listaPrecios = new ArrayList<String>();
+        listaDescripciones = new ArrayList<String>();
 
         Bundle extras = getIntent().getExtras();
 
@@ -49,9 +53,10 @@ public class ListaItemsActivity extends AppCompatActivity {
         for (int i = 0; i < Plato.lista_platos.size(); i++) {
             listaNombres.add(Plato.lista_platos.get(i).getTitulo());
             listaPrecios.add("Precio: $" + (Plato.lista_platos.get(i).getPrecio()).toString());
+            listaDescripciones.add(Plato.lista_platos.get(i).getDescripcion());
         }
 
-        final AdapterDatosRecycler adapter = new AdapterDatosRecycler(listaNombres, listaPrecios, pantallaAnterior);
+        final AdapterDatosRecycler adapter = new AdapterDatosRecycler(listaNombres, listaPrecios, listaDescripciones, pantallaAnterior, new Dialog(this));
         recycler.setAdapter(adapter);
 
         confirmarPlato = (Button) findViewById(R.id.confirmarPedido_btn);

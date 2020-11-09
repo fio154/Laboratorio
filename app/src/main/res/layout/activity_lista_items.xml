@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorPrincipalAzulOscuro"
     tools:context=".ListaItemsActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -32,7 +33,9 @@
                  android:id="@+id/confirmarPedido_btn"
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
-                 android:text="CONFIRMAR PLATOS" />
+                 android:text="CONFIRMAR PLATOS"
+                android:background="@drawable/boton_redondo"
+                android:textColor="@color/blanco"/>
 
         </LinearLayout>
     </ScrollView>

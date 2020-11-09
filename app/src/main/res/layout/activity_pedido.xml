@@ -1,154 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PedidoActivity">
+    android:background="@color/colorPrincipalAzulOscuro">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrincipalAzulOscuro"
+        tools:context=".PedidoActivity">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <Button
+            android:id="@+id/agregarPlato_btn"
+            android:layout_width="312dp"
+            android:layout_height="101dp"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/boton_redondo"
+            android:text="@string/agregarPlatos"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/blanco"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
+        <TextView
+            android:id="@+id/cantidadVer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Cantidad"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/blanco"
+            app:layout_constraintEnd_toStartOf="@+id/descripcionVer"
+            app:layout_constraintHorizontal_bias="0.438"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/agregarPlato_btn" />
 
-                <Button
-                    android:id="@+id/agregarPlato_btn"
-                    android:layout_width="312dp"
-                    android:layout_height="101dp"
-                    android:layout_marginStart="44dp"
-                    android:layout_marginTop="20dp"
-                    android:text="@string/agregarPlatos"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        <TextView
+            android:id="@+id/descripcionVer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="44dp"
+            android:text="Descripcion"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/blanco"
+            app:layout_constraintEnd_toStartOf="@+id/precioVer"
+            app:layout_constraintTop_toBottomOf="@+id/agregarPlato_btn" />
 
-            <TextView
-                android:id="@+id/cantidadVer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Cantidad"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                app:layout_constraintEnd_toStartOf="@+id/descripcionVer"
-                app:layout_constraintHorizontal_bias="0.438"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/agregarPlato_btn" />
+        <TextView
+            android:id="@+id/precioVer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="44dp"
+            android:text="Precio"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/blanco"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/agregarPlato_btn" />
 
-            <TextView
-                android:id="@+id/descripcionVer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="44dp"
-                android:text="Descripcion"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                app:layout_constraintEnd_toStartOf="@+id/precioVer"
-                app:layout_constraintTop_toBottomOf="@+id/agregarPlato_btn" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_pedido"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/descripcionVer" />
 
-            <TextView
-                android:id="@+id/precioVer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="44dp"
-                android:text="Precio"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/agregarPlato_btn" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="82dp"
+            android:layout_height="26dp"
+            android:layout_marginEnd="4dp"
+            android:text="TOTAL"
+            android:textColor="@color/blanco"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/mail_pedido"
+            app:layout_constraintEnd_toStartOf="@+id/total"
+            app:layout_constraintStart_toStartOf="@+id/mail_pedido"
+            app:layout_constraintTop_toBottomOf="@+id/recycler_pedido" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_pedido"
+        <TextView
+            android:id="@+id/total"
+            android:layout_width="82dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="24dp"
+            android:text="0.0"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/blanco"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView2"
+            app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mail_pedido"
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:hint="@string/hint_email"
+            android:textColor="@color/blanco"
+            android:textColorHint="@color/color_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/direccion_pedido"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:hint="@string/direccionPedido"
+            android:textColor="@color/blanco"
+            android:textColorHint="@color/color_hint"
+            app:layout_constraintTop_toBottomOf="@+id/mail_pedido"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup3"
+            android:layout_width="286dp"
+            android:layout_height="67dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/direccion_pedido">
+
+            <RadioButton
+                android:id="@+id/envio_domicilio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/descripcionVer" />
+                android:buttonTint="@color/blanco"
+                android:text="@string/tipoEnvio1"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/blanco" />
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="82dp"
-                android:layout_height="26dp"
-                android:layout_marginEnd="4dp"
-                android:text="TOTAL"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toTopOf="@+id/mail_pedido"
-                app:layout_constraintEnd_toStartOf="@+id/total"
-                app:layout_constraintStart_toStartOf="@+id/mail_pedido"
-                app:layout_constraintTop_toBottomOf="@+id/recycler_pedido" />
-
-            <TextView
-                android:id="@+id/total"
-                android:layout_width="82dp"
-                android:layout_height="26dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="24dp"
-                android:text="0.0"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView2"
-                app:layout_constraintTop_toTopOf="@+id/textView2" />
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/mail_pedido"
-                android:layout_width="match_parent"
-                android:layout_height="47dp"
-                android:hint="@string/hint_email"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/direccion_pedido"
+            <RadioButton
+                android:id="@+id/take_away"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:hint="@string/direccionPedido"
-                app:layout_constraintTop_toBottomOf="@+id/mail_pedido"
-                tools:layout_editor_absoluteX="0dp" />
+                android:buttonTint="@color/blanco"
+                android:text="@string/tipoEnvio2"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/blanco" />
+        </RadioGroup>
 
-            <RadioGroup
-                android:id="@+id/radioGroup3"
-                android:layout_width="286dp"
-                android:layout_height="67dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/direccion_pedido">
-
-                <RadioButton
-                    android:id="@+id/envio_domicilio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tipoEnvio1"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-                <RadioButton
-                    android:id="@+id/take_away"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tipoEnvio2"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-            </RadioGroup>
-
-            <Button
-                android:id="@+id/confirmarPedido_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="60dp"
-                android:text="@string/confirmar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/radioGroup3" />
+        <Button
+            android:id="@+id/confirmarPedido_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/boton_redondo"
+            android:text="@string/confirmar"
+            android:textColor="@color/blanco"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup3" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrincipalAzulOscuro">
 
     <androidx.cardview.widget.CardView
         android:layout_width="371dp"
@@ -48,7 +49,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/ic_launcher_background">
+                    android:background="@color/colorPrincipalAzulOscuro">
 
                     <TextView
                         android:id="@+id/cantidad"
@@ -58,6 +59,7 @@
                         android:layout_marginTop="24dp"
                         android:layout_marginEnd="24dp"
                         android:text="TextView"
+                        android:textColor="@color/blanco"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         app:layout_constraintEnd_toStartOf="@+id/nombre_pedido"
                         app:layout_constraintHorizontal_bias="0.464"
@@ -72,6 +74,7 @@
                         android:layout_marginTop="24dp"
                         android:layout_marginEnd="24dp"
                         android:text="TextView"
+                        android:textColor="@color/blanco"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         app:layout_constraintEnd_toStartOf="@+id/precio_pedido"
                         app:layout_constraintStart_toEndOf="@+id/cantidad"
@@ -85,6 +88,7 @@
                         android:layout_marginTop="24dp"
                         android:layout_marginEnd="24dp"
                         android:text="TextView"
+                        android:textColor="@color/blanco"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/nombre_pedido"
