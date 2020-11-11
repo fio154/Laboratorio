@@ -5,16 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#ccc"
+    android:background="@color/colorPrincipalAzulOscuro"
     android:padding="10dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
-        android:layout_width="375dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:backgroundTint="@color/colorExito"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="20dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -26,10 +28,10 @@
 
             <ImageView
                 android:id="@+id/imagen"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/imagensplash" />
@@ -40,38 +42,74 @@
                 android:layout_height="wrap_content"
                 android:text="Plato"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                app:layout_constraintBottom_toBottomOf="@+id/imagen"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.033"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/imagen"
-                app:layout_constraintVertical_bias="1.0" />
-
-            <TextView
-                android:id="@+id/precio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Precio: $"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imagen" />
 
             <TextView
-                android:id="@+id/ver"
+                android:id="@+id/precio_pedido"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ver"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="Precio: $"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/precio"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toBottomOf="@+id/plato" />
+
+            <Button
+                android:id="@+id/buttonAumentar"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:text="+"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/boton_card_view_plato"
+                android:textColor="@color/colorPrincipalAzulOscuro"/>
+
+            <Button
+                android:id="@+id/buttonDisminuir"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="40dp"
+                android:text="-"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/cantidadPedido"
+                app:layout_constraintTop_toBottomOf="@+id/precio_pedido"
+                android:background="@drawable/boton_card_view_plato"
+                android:textColor="@color/colorPrincipalAzulOscuro"/>
+
+            <TextView
+                android:id="@+id/cantidadPedido"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="28dp"
+                android:text="0"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/colorPrincipalAzulOscuro"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/buttonAumentar"
+                app:layout_constraintTop_toBottomOf="@+id/precio_pedido" />
+
+            <Button
+                android:id="@+id/ver"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:text="Ver"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/buttonDisminuir"
+                app:layout_constraintHorizontal_bias="0.205"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/precio_pedido"
+                android:background="@drawable/boton_card_view_plato"
+                android:textColor="@color/colorPrincipalAzulOscuro"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

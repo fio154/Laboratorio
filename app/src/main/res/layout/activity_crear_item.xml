@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorPrincipalAzulOscuro"
     tools:context=".CrearItemActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -19,7 +20,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/nuevo_plato"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/blanco"/>
 
     <EditText
         android:id="@+id/titulo"
@@ -27,21 +29,28 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/hint_titulo"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:textColor="@color/blanco"
+        android:textColorHint="@color/color_hint"
+        android:backgroundTint="@color/colorPrimary"/>
 
     <TextView
-        android:id="@+id/tv_descripcion"
+        android:id="@+id/descripcion_CT"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/descripcion"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/blanco"/>
 
     <EditText
-        android:id="@+id/descripcion"
+        android:id="@+id/descripcion_crear"
         android:layout_width="match_parent"
         android:layout_height="68dp"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:textColor="@color/blanco"
+        android:textColorHint="@color/color_hint"
+        android:backgroundTint="@color/colorPrimary"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,13 +58,16 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/precio"
+            android:id="@+id/precio_pedido"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
             android:hint="Precio"
-            android:inputType="numberDecimal" />
+            android:inputType="numberDecimal"
+            android:textColor="@color/blanco"
+            android:textColorHint="@color/color_hint"
+            android:backgroundTint="@color/colorPrimary"/>
 
         <EditText
             android:id="@+id/calorias"
@@ -64,14 +76,19 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="Calorias"
-            android:inputType="number" />
+            android:inputType="number"
+            android:textColor="@color/blanco"
+            android:textColorHint="@color/color_hint"
+            android:backgroundTint="@color/colorPrimary"/>
     </LinearLayout>
 
     <Button
         android:id="@+id/btn_guardar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="guardar" />
+        android:text="guardar"
+        android:background="@drawable/boton_redondo"
+        android:textColor="@color/blanco"/>
 
 
 </LinearLayout>

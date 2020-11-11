@@ -11,6 +11,10 @@ import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
+import model.Plato;
+
 import static isi.dam.sendmeal.R.menu.menu;
 
 public class HomeActivity extends AppCompatActivity {
@@ -42,6 +46,7 @@ public class HomeActivity extends AppCompatActivity {
         final Intent siguienteMain = new Intent(this, MainActivity.class);
         final Intent siguienteCrearItems = new Intent(this, CrearItemActivity.class);
         final Intent siguienteListaItems = new Intent(this, ListaItemsActivity.class);
+        final Intent siguienteNuevoPedido = new Intent(this, PedidoActivity.class);
 
         switch(item.getItemId()){
             case R.id.registrame:
@@ -51,8 +56,13 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(siguienteCrearItems);
                 break;
             case R.id.lista_items:
+                String pantalla = "home";
+                siguienteListaItems.putExtra("pantalla", pantalla);
                 startActivity(siguienteListaItems);
                 break;
+            case R.id.nuevo_pedido:
+                AdapterDatosRecycler.listaPlatosPedidos = new ArrayList<Plato>();
+                startActivity(siguienteNuevoPedido);
         }
 
         return super.onOptionsItemSelected(item);

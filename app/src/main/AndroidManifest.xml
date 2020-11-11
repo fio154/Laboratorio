@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="isi.dam.sendmeal">
 
     <application
@@ -17,12 +18,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ListaItemsActivity"
-            android:parentActivityName=".HomeActivity"/>
-        <activity android:name=".CrearItemActivity"
-            android:parentActivityName=".HomeActivity"/>
-        <activity android:name=".MainActivity"
-            android:parentActivityName=".HomeActivity"/>
+        <activity
+            android:name=".PedidoActivity"
+            android:parentActivityName=".HomeActivity" />
+        <activity
+            android:name=".CrearItemActivity"
+            android:parentActivityName=".HomeActivity" />
+        <activity
+            android:name=".ListaItemsActivity"/>
+        <activity
+            android:name=".MainActivity"
+            android:parentActivityName=".HomeActivity" />
+        <receiver android:name=".MyNotificationPublisher" android:exported="true">
+        </receiver>
+
     </application>
+
+
+
 
 </manifest>

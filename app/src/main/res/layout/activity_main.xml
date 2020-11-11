@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorPrincipalAzulOscuro"
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -15,182 +16,238 @@
         android:background="@color/colorPrimary"
         xmlns:android="http://schemas.android.com/apk/res/android"/>
 
-
-    <EditText
-        android:id="@+id/nombre"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/hint_nombre"
-        android:inputType="textPersonName" />
-
-    <EditText
-        android:id="@+id/contraseña"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/hint_contrasena"
-        android:inputType="textPassword" />
-
-    <EditText
-        android:id="@+id/repetir_contraseña"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/hint_repetir_contra"
-        android:inputType="textPassword" />
-
-    <EditText
-        android:id="@+id/email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/hint_email"
-        android:inputType="textEmailAddress" />
-
-    <TextView
-        android:id="@+id/tipo_tarjeta"
-        android:layout_width="@dimen/ancho_tipo_tarjeta"
-        android:layout_height="wrap_content"
-        android:text="@string/text_tipo_tarjeta" />
-
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/debito"
-            android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="@string/text_debito" />
+            android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/credito"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="@string/text_credito" />
+            <EditText
+                android:id="@+id/nombre_pedido"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:ems="10"
+                android:hint="@string/hint_nombre"
+                android:inputType="textPersonName"
+                android:textColor="@color/blanco"
+                android:textColorHint="@color/color_hint" />
 
-    </RadioGroup>
+            <EditText
+                android:id="@+id/contraseña"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:ems="10"
+                android:hint="@string/hint_contrasena"
+                android:inputType="textPassword"
+                android:textColor="@color/blanco"
+                android:textColorHint="@color/color_hint" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+            <EditText
+                android:id="@+id/repetir_contraseña"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:ems="10"
+                android:hint="@string/hint_repetir_contra"
+                android:inputType="textPassword"
+                android:textColor="@color/blanco"
+                android:textColorHint="@color/color_hint" />
 
-        <EditText
-            android:id="@+id/numero_tarjeta"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/hint_nro_tarjeta"
-            android:inputType="number" />
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:ems="10"
+                android:hint="@string/hint_email"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/blanco"
+                android:textColorHint="@color/color_hint" />
 
-        <EditText
-            android:id="@+id/ccv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/marginend_ccv"
-            android:ems="10"
-            android:hint="@string/hint_ccv"
-            android:inputType="number" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tipo_tarjeta"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="@string/text_tipo_tarjeta"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/blanco" />
 
-    <TextView
-        android:id="@+id/vencimiento"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margintop_vencimiento"
-        android:text="@string/text_fecha_vencimiento" />
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/debito"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:buttonTint="@color/blanco"
+                    android:text="@string/text_debito"
+                    android:textColor="@color/blanco" />
 
-        <EditText
-            android:id="@+id/mes"
-            android:layout_width="@dimen/ancho_mes_anio"
-            android:layout_height="@dimen/alto_mes_anio"
-            android:layout_marginTop="@dimen/margintop_mes_anio"
-            android:layout_marginEnd="@dimen/marginend_mes_anio"
-            android:ems="10"
-            android:hint="@string/hint_mes"
-            android:inputType="number" />
+                <RadioButton
+                    android:id="@+id/credito"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:buttonTint="@color/blanco"
+                    android:text="@string/text_credito"
+                    android:textColor="@color/blanco" />
 
-        <EditText
-            android:id="@+id/año"
-            android:layout_width="@dimen/ancho_mes_anio"
-            android:layout_height="@dimen/alto_mes_anio"
-            android:layout_marginTop="@dimen/margintop_mes_anio"
-            android:layout_marginEnd="@dimen/marginend_mes_anio"
-            android:ems="10"
-            android:hint="@string/hint_anio"
-            android:inputType="number" />
-    </LinearLayout>
+            </RadioGroup>
 
-    <EditText
-        android:id="@+id/cbu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/hint_cbu"
-        android:inputType="textPersonName" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/alias_cbu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margintop_cbu"
-        android:ems="10"
-        android:hint="@string/hint_alias_cbu"
-        android:inputType="textPersonName" />
+                <EditText
+                    android:id="@+id/numero_tarjeta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/hint_nro_tarjeta"
+                    android:inputType="number"
+                    android:textColor="@color/blanco"
+                    android:textColorHint="@color/color_hint"
+                    android:backgroundTint="@color/colorPrimary"/>
 
-    <Switch
-        android:id="@+id/carga"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margintop_sw_carga"
-        android:text="@string/text_carga_inicial" />
+                <EditText
+                    android:id="@+id/ccv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/marginend_ccv"
+                    android:ems="10"
+                    android:hint="@string/hint_ccv"
+                    android:inputType="number"
+                    android:textColor="@color/blanco"
+                    android:textColorHint="@color/color_hint"
+                    android:backgroundTint="@color/colorPrimary"/>
+            </LinearLayout>
 
-    <TextView
-        android:id="@+id/credito_inicial"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/text_credito_inicial" />
+            <TextView
+                android:id="@+id/vencimiento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margintop_vencimiento"
+                android:text="@string/text_fecha_vencimiento"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/blanco" />
 
-    <SeekBar
-        android:id="@+id/seekBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:max="1500" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-    <CheckBox
-        android:id="@+id/terminos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/text_acepto_term" />
+                <EditText
+                    android:id="@+id/mes"
+                    android:layout_width="@dimen/ancho_mes_anio"
+                    android:layout_height="@dimen/alto_mes_anio"
+                    android:layout_marginTop="@dimen/margintop_mes_anio"
+                    android:layout_marginEnd="@dimen/marginend_mes_anio"
+                    android:ems="10"
+                    android:hint="@string/hint_mes"
+                    android:inputType="number"
+                    android:textColor="@color/blanco"
+                    android:textColorHint="@color/color_hint"
+                    android:backgroundTint="@color/colorPrimary"/>
 
-    <Button
-        android:id="@+id/registrar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margintop_registrar"
-        android:text="@string/text_btn_registrar" />
+                <EditText
+                    android:id="@+id/año"
+                    android:layout_width="@dimen/ancho_mes_anio"
+                    android:layout_height="@dimen/alto_mes_anio"
+                    android:layout_marginTop="@dimen/margintop_mes_anio"
+                    android:layout_marginEnd="@dimen/marginend_mes_anio"
+                    android:ems="10"
+                    android:hint="@string/hint_anio"
+                    android:inputType="number"
+                    android:textColor="@color/blanco"
+                    android:textColorHint="@color/color_hint"
+                    android:backgroundTint="@color/colorPrimary"/>
+            </LinearLayout>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/cbu"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:ems="10"
+                android:hint="@string/hint_cbu"
+                android:inputType="textPersonName"
+                android:textColor="@color/blanco"
+                android:textColorHint="@color/color_hint" />
 
-    <TextView
-        android:id="@+id/mensaje_exito"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/exito"
-        android:textColor="@color/colorExito" />
+            <EditText
+                android:id="@+id/alias_cbu"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="@dimen/margintop_cbu"
+                android:backgroundTint="@color/colorPrimary"
+                android:ems="10"
+                android:hint="@string/hint_alias_cbu"
+                android:inputType="textPersonName"
+                android:textColor="@color/blanco"
+                android:textColorHint="@color/color_hint" />
+
+            <Switch
+                android:id="@+id/carga"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margintop_sw_carga"
+                android:switchTextAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:text="@string/text_carga_inicial"
+                android:textColor="@color/blanco" />
+
+            <TextView
+                android:id="@+id/credito_inicial"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="@string/text_credito_inicial"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/blanco" />
+
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:max="1500" />
+
+            <CheckBox
+                android:id="@+id/terminos"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:buttonTint="@color/blanco"
+                android:text="@string/text_acepto_term"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/blanco" />
+
+            <Button
+                android:id="@+id/registrar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/boton_redondo"
+                android:text="@string/text_btn_registrar"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/blanco" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/mensaje_exito"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:text="@string/exito"
+                android:textColor="@color/blanco" />
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

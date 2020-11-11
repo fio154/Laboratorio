@@ -17,6 +17,7 @@ public class CrearItemActivity extends AppCompatActivity {
     Toolbar toolbar;
     Button guardar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,8 +28,8 @@ public class CrearItemActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         titulo = (EditText) findViewById(R.id.titulo);
-        descripcion = (EditText) findViewById(R.id.descripcion);
-        precio = (EditText) findViewById(R.id.precio);
+        descripcion = (EditText) findViewById(R.id.descripcion_crear);
+        precio = (EditText) findViewById(R.id.precio_pedido);
         calorias = (EditText) findViewById(R.id.calorias);
         guardar = (Button) findViewById(R.id.btn_guardar);
 
