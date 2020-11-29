@@ -16,36 +16,21 @@ import java.util.Collections;
 public class AdapterDatosPedido extends RecyclerView.Adapter<AdapterDatosPedido.PedidoViewHolder> {
 
     ArrayList<String> listaNombres, listaPrecios, listaCantidades;
-    ArrayList<ImageButton> borrar;
+    ArrayList<Double> listaPreciosDouble;
+    TextView total;
 
-    public AdapterDatosPedido(ArrayList<String> listaCantidades, ArrayList<String> listaNombres, ArrayList<String> listaPrecios) {
+    public AdapterDatosPedido(ArrayList<String> listaCantidades, ArrayList<String> listaNombres, ArrayList<String> listaPrecios, ArrayList<Double> listaPreciosDouble, TextView total) {
         this.listaCantidades = listaCantidades;
         this.listaNombres = listaNombres;
         this.listaPrecios = listaPrecios;
+        this.listaPreciosDouble = listaPreciosDouble;
+        this.total = total;
     }
 
     @NonNull
     @Override
     public PedidoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.pedido, null, false);
-        /*borrar = new ArrayList<ImageButton>();
-        for(int i=0; i < listaNombres.size(); i++) {
-            ImageButton borrar_aux = (ImageButton) view.findViewById(R.id.buttonBorrar);
-            final int finalI = i;
-            borrar_aux.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String plato_a_eliminar = listaNombres.get(finalI);
-                    for(int j = 0; j<AdapterDatosRecycler.listaPlatosPedidos.size(); j++) {
-                        if(AdapterDatosRecycler.listaPlatosPedidos.get(j).getTitulo().equals(plato_a_eliminar)) {
-                            AdapterDatosRecycler.listaPlatosPedidos.removeAll(Collections.singleton(AdapterDatosRecycler.listaPlatosPedidos.get(j)));
-                        }
-                    }
-                }
-            });
-            borrar.add(borrar_aux);
-        }*/
-
         return new PedidoViewHolder(view);
     }
 
@@ -84,6 +69,7 @@ public class AdapterDatosPedido extends RecyclerView.Adapter<AdapterDatosPedido.
 
     public void removeItem(int position){
         listaNombres.remove(position);
+        listaPreciosDouble.remove(position);
         listaCantidades.remove(position);
         listaPrecios.remove(position);
         notifyItemRemoved(position);
@@ -96,6 +82,14 @@ public class AdapterDatosPedido extends RecyclerView.Adapter<AdapterDatosPedido.
                    }
             }
         }
+
+        Double total_aux = 0.0;
+        for(int j = 0; j < listaPreciosDouble.size(); j++) {
+            int cant = Integer.parseInt(listaCantidades.get(j));
+            total_aux += listaPreciosDouble.get(j) * cant;
+        };
+        total.setText(String.valueOf(total_aux));
+
     }
 
 

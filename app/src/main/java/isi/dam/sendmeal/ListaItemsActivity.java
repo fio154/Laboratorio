@@ -26,8 +26,7 @@ public class ListaItemsActivity extends AppCompatActivity {
     ArrayList<String> listaNombres, listaPrecios, listaDescripciones;
     RecyclerView recycler;
     String pantallaAnterior;
-    Button confirmarPlato, pedir;
-    TextView plato;
+    Button confirmarPlato;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +70,7 @@ public class ListaItemsActivity extends AppCompatActivity {
         confirmarPlato.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AdapterDatosRecycler.listaPlatosPedidos.clear();
                 for(int i=0; i<Plato.lista_platos.size(); i++) {
                     for(int j=0; j < Integer.parseInt(adapter.listaCantidades.get(i).getText().toString()); j++) {
                         if(Plato.lista_platos.get(i).getTitulo().equals(adapter.listaNombres.get(i))){
@@ -95,7 +95,8 @@ public class ListaItemsActivity extends AppCompatActivity {
 
         if(pantallaAnterior.equals("home")){
              startActivity(anteriorHome);
-        }else if(pantallaAnterior.equals("pedido")){
+        }
+        else if(pantallaAnterior.equals("pedido")){
              startActivity(anteriorPedido);
         }
 
