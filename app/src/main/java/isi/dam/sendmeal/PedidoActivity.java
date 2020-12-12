@@ -33,7 +33,6 @@ public class PedidoActivity extends AppCompatActivity implements RecyclerItemTou
     ArrayList<Double> listaPrecios_double;
     RecyclerView recycler;
     Button agregarPlato, confirmarPedido;
-    ArrayList<Plato> listaPlatosPedidos;
     TextView total, email, direccion;
     RadioButton envioDomicilio, takeAway;
     static final int REQUEST_CODE = 222;
@@ -95,7 +94,6 @@ public class PedidoActivity extends AppCompatActivity implements RecyclerItemTou
                 listaCantidades = new ArrayList<String>();
                 listaPrecios_double = new ArrayList<Double>();
 
-                ArrayList<Plato> listaPlatosAuxiliar = new ArrayList<Plato>();
 
                 for(int i = 0; i < listaPlatos.size(); i++) {
                     int contador = 0;
@@ -116,7 +114,8 @@ public class PedidoActivity extends AppCompatActivity implements RecyclerItemTou
                 Log.i("CANTIDAD", listaCantidades.toString());
                 Log.i("NOMBRES", listaNombres.toString());
                 Log.i("Precios", listaPrecios.toString());
-                adapterPedido = new AdapterDatosPedido(listaCantidades, listaNombres, listaPrecios);
+                Log.i("Precios Double", listaPrecios_double.toString());
+                adapterPedido = new AdapterDatosPedido(listaCantidades, listaNombres, listaPrecios, listaPrecios_double, total);
                 recycler.setAdapter(adapterPedido);
 
                 ItemTouchHelper.SimpleCallback simpleCallback =
@@ -127,7 +126,8 @@ public class PedidoActivity extends AppCompatActivity implements RecyclerItemTou
 
                 Double total_aux = 0.0;
                 for(int j = 0; j < listaPrecios.size(); j++) {
-                    total_aux += listaPrecios_double.get(j);
+                    int cant = Integer.parseInt(listaCantidades.get(j));
+                    total_aux += listaPrecios_double.get(j) * cant;
                 };
                 total.setText(String.valueOf(total_aux));
 

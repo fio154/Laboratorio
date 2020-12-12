@@ -83,9 +83,9 @@ public class ListaItemsActivity extends AppCompatActivity {
                 intent.putParcelableArrayListExtra("listaPlatos", AdapterDatosRecycler.listaPlatosPedidos);
                 setResult(RESULT_OK, intent);
                 finish();
-            }
-        });
-    }
+                }
+            });
+        }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
@@ -94,9 +94,9 @@ public class ListaItemsActivity extends AppCompatActivity {
         final Intent anteriorPedido = new Intent(this, PedidoActivity.class);
 
         if(pantallaAnterior.equals("home")){
-            startActivity(anteriorHome);
+             startActivity(anteriorHome);
         }else if(pantallaAnterior.equals("pedido")){
-            startActivity(anteriorPedido);
+             startActivity(anteriorPedido);
         }
 
         return super.onOptionsItemSelected(item);
