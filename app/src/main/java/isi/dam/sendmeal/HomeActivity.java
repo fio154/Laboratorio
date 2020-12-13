@@ -19,7 +19,6 @@ import static isi.dam.sendmeal.R.menu.menu;
 
 public class HomeActivity extends AppCompatActivity {
 
-    Button registrarme, lista_items, crear_items;
     Toolbar toolbar;
 
     @Override

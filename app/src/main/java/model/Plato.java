@@ -3,9 +3,17 @@ package model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.ArrayList;
 
+@Entity
 public class Plato implements Parcelable {
+
+
+    @PrimaryKey(autoGenerate = true)
+    private Long id;
     private String titulo, descripcion;
     private Double precio;
     private Integer calorias;
@@ -41,6 +49,14 @@ public class Plato implements Parcelable {
 
     public Plato() {
 
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitulo() {

@@ -4,18 +4,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.List;
+
+import bdd.AppRepository;
+import bdd.OnPlatoResultCallback;
 import model.Plato;
 
-public class CrearItemActivity extends AppCompatActivity {
+public class CrearItemActivity extends AppCompatActivity implements AppRepository.OnResultCallback {
 
     EditText titulo, descripcion,precio, calorias;
     Toolbar toolbar;
     Button guardar;
+
+    AppRepository repository;
 
 
     @Override
@@ -41,6 +48,9 @@ public class CrearItemActivity extends AppCompatActivity {
                 }
             }
         });
+
+        // BASE DE DATOS
+        repository = new AppRepository(this.getApplication(), (AppRepository.OnResultCallback) this);
     }
 
     public boolean validarDatos() {
@@ -84,6 +94,9 @@ public class CrearItemActivity extends AppCompatActivity {
 
         Plato.lista_platos.add(plato);
 
+        repository.insertar(plato);
+        repository.buscarTodos();
+
         Toast.makeText(this, "¡Se ha registrado el plato con exito!", Toast.LENGTH_SHORT).show();
 
         titulo.setText(null);
@@ -93,16 +106,17 @@ public class CrearItemActivity extends AppCompatActivity {
     }
 
     public boolean platoRepetido(String plato){
-
         plato = plato.toLowerCase();
-
         for(int i=0; i<Plato.lista_platos.size(); i++){
-
             String plato2 = Plato.lista_platos.get(i).getTitulo().toLowerCase();
-
             if(plato.equals(plato2)) return true;
         }
-
         return false;
+    }
+
+    @Override
+    public void onResult(List result) {
+        Toast.makeText(this, "Exito!", Toast.LENGTH_SHORT).show();
+        for(Object p : result) Log.i("Plato: ", p.toString());
     }
 }
