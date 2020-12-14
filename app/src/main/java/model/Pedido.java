@@ -3,18 +3,46 @@ package model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
+
 import java.util.ArrayList;
 
+import bdd.AppRepository;
+
+@Entity(tableName = "pedido", foreignKeys = @ForeignKey(entity = Plato.class,
+        parentColumns = "id",
+        childColumns = "platosFK",
+        onDelete = ForeignKey.CASCADE,
+        onUpdate = ForeignKey.CASCADE))
 public class Pedido implements Parcelable {
 
-    private ArrayList<Plato> platos;
-    private String email;
-    private String direccion;
-    private Boolean paraEnviar;
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(index = true, name = "id")
+    public Long id;
+
+    @ColumnInfo(name = "email")
+    public String email;
+
+    @ColumnInfo(name = "direccion")
+    public String direccion;
+
+    @ColumnInfo(name = "paraEnviar")
+    public Boolean paraEnviar;
+
+    @ColumnInfo(name = "platosFK")
+    public ArrayList<String> platosFK;
+
 
     public Pedido() {
 
     }
+
+   /* public ArrayList<Plato> platos;
+
+
 
     public ArrayList<Plato> getPlatos() {
         return platos;
@@ -22,7 +50,7 @@ public class Pedido implements Parcelable {
 
     public void setPlatos(ArrayList<Plato> platos) {
         this.platos = platos;
-    }
+    }*/
 
     public String getEmail() {
         return email;
@@ -48,13 +76,13 @@ public class Pedido implements Parcelable {
         this.paraEnviar = paraEnviar;
     }
 
-    protected Pedido(Parcel in) {
-        if (in.readByte() == 0x01) {
+    public Pedido(Parcel in) {
+       /* if (in.readByte() == 0x01) {
             platos = new ArrayList<Plato>();
             in.readList(platos, Plato.class.getClassLoader());
         } else {
             platos = null;
-        }
+        }*/
         email = in.readString();
         direccion = in.readString();
         byte paraEnviarVal = in.readByte();
@@ -68,12 +96,12 @@ public class Pedido implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        if (platos == null) {
+       /* if (platos == null) {
             dest.writeByte((byte) (0x00));
         } else {
             dest.writeByte((byte) (0x01));
             dest.writeList(platos);
-        }
+        }*/
         dest.writeString(email);
         dest.writeString(direccion);
         if (paraEnviar == null) {

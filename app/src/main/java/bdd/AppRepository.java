@@ -7,9 +7,10 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Pedido;
 import model.Plato;
 
-public class AppRepository implements OnPlatoResultCallback {
+public class AppRepository implements OnPlatoResultCallback{
     private PlatoDao platoDao;
     private OnResultCallback callback;
 
@@ -21,12 +22,10 @@ public class AppRepository implements OnPlatoResultCallback {
 
     public void insertar(final Plato plato){
         platoDao.insertar(plato);
-
     }
 
     public void borrar(final Plato plato){
         platoDao.borrar(plato);
-
     }
 
     public void actualizar(final Plato plato){

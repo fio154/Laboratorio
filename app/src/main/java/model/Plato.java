@@ -3,20 +3,30 @@ package model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
 
-@Entity
+@Entity(tableName = "plato")
 public class Plato implements Parcelable {
 
-
     @PrimaryKey(autoGenerate = true)
-    private Long id;
-    private String titulo, descripcion;
-    private Double precio;
-    private Integer calorias;
+    @ColumnInfo(index = true, name = "id")
+    public Long id;
+
+    @ColumnInfo(name = "titulo")
+    public String titulo;
+
+    @ColumnInfo(name = "descripcion")
+    public String descripcion;
+
+    @ColumnInfo(name = "precio")
+    public Double precio;
+
+    @ColumnInfo(name = "calorias")
+    public Integer calorias;
 
     public static ArrayList<Plato> lista_platos = new ArrayList<Plato>();
 

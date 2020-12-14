@@ -20,12 +20,15 @@ import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
+import bdd.AppRepository;
+import bdd.AppRepositoryPedido;
 import model.Pedido;
 import model.Plato;
 
-public class PedidoActivity extends AppCompatActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
+public class PedidoActivity extends AppCompatActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener, AppRepository.OnResultCallback {
 
     Context contexto = this;
     Toolbar toolbar;
@@ -37,6 +40,7 @@ public class PedidoActivity extends AppCompatActivity implements RecyclerItemTou
     RadioButton envioDomicilio, takeAway;
     static final int REQUEST_CODE = 222;
     AdapterDatosPedido adapterPedido;
+    AppRepositoryPedido repositoryPedido;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +69,8 @@ public class PedidoActivity extends AppCompatActivity implements RecyclerItemTou
             }
         });
 
+        repositoryPedido = new AppRepositoryPedido(this.getApplication(), (AppRepositoryPedido.OnResultCallback) this);
+
         confirmarPedido = (Button) findViewById(R.id.confirmarPedido_btn);
         confirmarPedido.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,8 +80,6 @@ public class PedidoActivity extends AppCompatActivity implements RecyclerItemTou
                 }
             }
         });
-
-
     }
 
     @Override
@@ -142,6 +146,11 @@ public class PedidoActivity extends AppCompatActivity implements RecyclerItemTou
         adapterPedido.removeItem(viewHolder.getAdapterPosition());
     }
 
+    @Override
+    public void onResult(List result) {
+        Toast.makeText(this, "Exito!", Toast.LENGTH_SHORT).show();
+    }
+
     class Task1 extends AsyncTask<String, Void, String> {
 
         @Override
@@ -156,12 +165,14 @@ public class PedidoActivity extends AppCompatActivity implements RecyclerItemTou
         @Override
         protected void onPostExecute(String result) {
                 Pedido nuevoPedido = new Pedido();
-                nuevoPedido.setPlatos(AdapterDatosRecycler.listaPlatosPedidos);
+              //  nuevoPedido.setPlatos(AdapterDatosRecycler.listaPlatosPedidos);
                 AdapterDatosRecycler.listaPlatosPedidos.clear();
 
                 nuevoPedido.setDireccion(direccion.getText().toString());
                 nuevoPedido.setEmail(email.getText().toString());
                 nuevoPedido.setParaEnviar(envioDomicilio.isSelected());
+
+                repositoryPedido.insertar(nuevoPedido);
 
                 Intent notificationIntent = new Intent(contexto, MyNotificationPublisher.class);
                 contexto.sendBroadcast(notificationIntent);
