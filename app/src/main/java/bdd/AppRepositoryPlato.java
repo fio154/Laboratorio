@@ -10,11 +10,11 @@ import java.util.List;
 import model.Pedido;
 import model.Plato;
 
-public class AppRepository implements OnPlatoResultCallback{
+public class AppRepositoryPlato implements OnPlatoResultCallback{
     private PlatoDao platoDao;
     private OnResultCallback callback;
 
-    public AppRepository(Application application, OnResultCallback context){
+    public AppRepositoryPlato(Application application, OnResultCallback context){
         AppDatabase db = AppDatabase.getInstance(application);
         platoDao = db.platoDao();
         callback = context;

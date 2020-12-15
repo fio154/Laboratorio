@@ -10,8 +10,6 @@ import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
 
-import bdd.AppRepository;
-
 @Entity(tableName = "pedido", foreignKeys = @ForeignKey(entity = Plato.class,
         parentColumns = "id",
         childColumns = "platosFK",

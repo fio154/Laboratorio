@@ -118,7 +118,6 @@ public class AdapterDatosRecycler extends RecyclerView.Adapter<AdapterDatosRecyc
 
     public void ShowPopup(View v, String descripciones) {
         TextView txt_cerrar, descripcion;
-        Button btnFollow;
         myDialog.setContentView(R.layout.pop_up_descripcion);
         txt_cerrar =(TextView) myDialog.findViewById(R.id.txt_cerrar);
         descripcion = (TextView) myDialog.findViewById(R.id.descripcion_pop_up);

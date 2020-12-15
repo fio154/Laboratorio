@@ -14,24 +14,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import bdd.AppRepository;
+import bdd.AppRepositoryPlato;
 import model.Plato;
 
-public class ListaItemsActivity extends AppCompatActivity implements AppRepository.OnResultCallback {
+public class ListaItemsActivity extends AppCompatActivity implements AppRepositoryPlato.OnResultCallback {
 
     Toolbar toolbar;
     ArrayList<String> listaNombres, listaPrecios, listaDescripciones;
     RecyclerView recycler;
     String pantallaAnterior;
-    Button confirmarPlato, pedir;
-    TextView plato;
+    Button confirmarPlato;
     AdapterDatosRecycler adapter;
-    AppRepository repository;
+    AppRepositoryPlato repository;
     Context context;
     List<Plato> platos;
 
@@ -58,7 +56,7 @@ public class ListaItemsActivity extends AppCompatActivity implements AppReposito
         pantallaAnterior = extras.getString("pantalla");
 
         // BASE DE DATOS
-        repository = new AppRepository(this.getApplication(), this);
+        repository = new AppRepositoryPlato(this.getApplication(), this);
         repository.buscarTodos();
 
         context = this;
@@ -121,6 +119,5 @@ public class ListaItemsActivity extends AppCompatActivity implements AppReposito
 
         adapter = new AdapterDatosRecycler(listaNombres, listaPrecios, listaDescripciones, pantallaAnterior, new Dialog(context));
         recycler.setAdapter(adapter);
-
     }
 }

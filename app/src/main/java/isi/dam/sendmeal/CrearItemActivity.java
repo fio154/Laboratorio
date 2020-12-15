@@ -12,17 +12,16 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import bdd.AppRepository;
-import bdd.OnPlatoResultCallback;
+import bdd.AppRepositoryPlato;
 import model.Plato;
 
-public class CrearItemActivity extends AppCompatActivity implements AppRepository.OnResultCallback {
+public class CrearItemActivity extends AppCompatActivity implements AppRepositoryPlato.OnResultCallback {
 
     EditText titulo, descripcion,precio, calorias;
     Toolbar toolbar;
     Button guardar;
 
-    AppRepository repository;
+    AppRepositoryPlato repository;
 
 
     @Override
@@ -50,7 +49,7 @@ public class CrearItemActivity extends AppCompatActivity implements AppRepositor
         });
 
         // BASE DE DATOS
-        repository = new AppRepository(this.getApplication(), (AppRepository.OnResultCallback) this);
+        repository = new AppRepositoryPlato(this.getApplication(), (AppRepositoryPlato.OnResultCallback) this);
     }
 
     public boolean validarDatos() {
@@ -117,6 +116,9 @@ public class CrearItemActivity extends AppCompatActivity implements AppRepositor
     @Override
     public void onResult(List result) {
         Toast.makeText(this, "Exito!", Toast.LENGTH_SHORT).show();
-        for(Object p : result) Log.i("Plato: ", p.toString());
+        for(Object p : result) {
+            Plato pl = (Plato) p;
+            Log.i("Plato: ", pl.getTitulo());
+        }
     }
 }

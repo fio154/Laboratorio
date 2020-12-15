@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,17 +17,16 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import bdd.AppRepository;
+import bdd.AppRepositoryPlato;
 import bdd.AppRepositoryPedido;
 import model.Pedido;
 import model.Plato;
 
-public class PedidoActivity extends AppCompatActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener, AppRepository.OnResultCallback {
+public class PedidoActivity extends AppCompatActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener, AppRepositoryPedido.OnResultCallback {
 
     Context contexto = this;
     Toolbar toolbar;
@@ -66,6 +64,7 @@ public class PedidoActivity extends AppCompatActivity implements RecyclerItemTou
                 String pantalla = "pedido";
                 siguienteListaItems.putExtra("pantalla",pantalla);
                 startActivityForResult(siguienteListaItems, REQUEST_CODE);
+                AdapterDatosRecycler.listaPlatosPedidos.clear();
             }
         });
 
@@ -98,7 +97,6 @@ public class PedidoActivity extends AppCompatActivity implements RecyclerItemTou
                 listaCantidades = new ArrayList<String>();
                 listaPrecios_double = new ArrayList<Double>();
 
-
                 for(int i = 0; i < listaPlatos.size(); i++) {
                     int contador = 0;
                     for(int j=0; j < listaPlatos.size(); j++) {
@@ -122,11 +120,8 @@ public class PedidoActivity extends AppCompatActivity implements RecyclerItemTou
                 adapterPedido = new AdapterDatosPedido(listaCantidades, listaNombres, listaPrecios, listaPrecios_double, total);
                 recycler.setAdapter(adapterPedido);
 
-                ItemTouchHelper.SimpleCallback simpleCallback =
-                        new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, PedidoActivity.this);
-
+                ItemTouchHelper.SimpleCallback simpleCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, PedidoActivity.this);
                 new ItemTouchHelper(simpleCallback).attachToRecyclerView(recycler);
-
 
                 Double total_aux = 0.0;
                 for(int j = 0; j < listaPrecios.size(); j++) {
@@ -165,7 +160,7 @@ public class PedidoActivity extends AppCompatActivity implements RecyclerItemTou
         @Override
         protected void onPostExecute(String result) {
                 Pedido nuevoPedido = new Pedido();
-              //  nuevoPedido.setPlatos(AdapterDatosRecycler.listaPlatosPedidos);
+              //nuevoPedido.setPlatos(AdapterDatosRecycler.listaPlatosPedidos);
                 AdapterDatosRecycler.listaPlatosPedidos.clear();
 
                 nuevoPedido.setDireccion(direccion.getText().toString());
@@ -190,7 +185,6 @@ public class PedidoActivity extends AppCompatActivity implements RecyclerItemTou
     }
 
     public boolean validar(){
-
         boolean retorno = true;
         String email_str = email.getText().toString();
         String direccion_str = direccion.getText().toString();
