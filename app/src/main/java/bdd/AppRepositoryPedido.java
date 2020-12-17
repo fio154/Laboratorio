@@ -61,9 +61,8 @@ public class AppRepositoryPedido implements OnPedidoResultCallback{
 
         @Override
         protected List<Pedido> doInBackground(String... strings) {
-            //List<Pedido> pedidos = dao.buscarTodos();
-           // return pedidos;
-            return null;
+            List<Pedido> pedidos = dao.buscarTodos();
+            return pedidos;
         }
 
         @Override

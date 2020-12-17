@@ -22,9 +22,9 @@ public interface PedidoDao {
     @Update
     void actualizar(Pedido pedido);
 
-   /* @Query("SELECT * FROM pedido WHERE id = :id")
+    @Query("SELECT * FROM pedido WHERE id = :id")
     Pedido buscar(String id);
 
     @Query("SELECT * FROM pedido")
-    List<Pedido> buscarTodos();*/
+    List<Pedido> buscarTodos();
 }

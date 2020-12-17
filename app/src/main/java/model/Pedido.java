@@ -10,11 +10,7 @@ import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
 
-@Entity(tableName = "pedido", foreignKeys = @ForeignKey(entity = Plato.class,
-        parentColumns = "id",
-        childColumns = "platosFK",
-        onDelete = ForeignKey.CASCADE,
-        onUpdate = ForeignKey.CASCADE))
+@Entity
 public class Pedido implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
@@ -30,17 +26,11 @@ public class Pedido implements Parcelable {
     @ColumnInfo(name = "paraEnviar")
     public Boolean paraEnviar;
 
-    @ColumnInfo(name = "platosFK")
-    public ArrayList<String> platosFK;
+    @ColumnInfo(name = "platos")
+    public ArrayList<Plato> platos;
 
 
-    public Pedido() {
-
-    }
-
-   /* public ArrayList<Plato> platos;
-
-
+    public Pedido() {}
 
     public ArrayList<Plato> getPlatos() {
         return platos;
@@ -48,7 +38,7 @@ public class Pedido implements Parcelable {
 
     public void setPlatos(ArrayList<Plato> platos) {
         this.platos = platos;
-    }*/
+    }
 
     public String getEmail() {
         return email;
@@ -75,12 +65,12 @@ public class Pedido implements Parcelable {
     }
 
     public Pedido(Parcel in) {
-       /* if (in.readByte() == 0x01) {
+        if (in.readByte() == 0x01) {
             platos = new ArrayList<Plato>();
             in.readList(platos, Plato.class.getClassLoader());
         } else {
             platos = null;
-        }*/
+        }
         email = in.readString();
         direccion = in.readString();
         byte paraEnviarVal = in.readByte();
@@ -94,12 +84,12 @@ public class Pedido implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-       /* if (platos == null) {
+        if (platos == null) {
             dest.writeByte((byte) (0x00));
         } else {
             dest.writeByte((byte) (0x01));
             dest.writeList(platos);
-        }*/
+        }
         dest.writeString(email);
         dest.writeString(direccion);
         if (paraEnviar == null) {

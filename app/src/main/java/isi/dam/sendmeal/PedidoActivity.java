@@ -113,6 +113,7 @@ public class PedidoActivity extends AppCompatActivity implements RecyclerItemTou
                 }
 
                 Log.i("PLATOS", listaPlatos.toString());
+                AdapterDatosRecycler.listaPlatosPedidos = listaPlatos;
                 Log.i("CANTIDAD", listaCantidades.toString());
                 Log.i("NOMBRES", listaNombres.toString());
                 Log.i("Precios", listaPrecios.toString());
@@ -144,6 +145,11 @@ public class PedidoActivity extends AppCompatActivity implements RecyclerItemTou
     @Override
     public void onResult(List result) {
         Toast.makeText(this, "Exito!", Toast.LENGTH_SHORT).show();
+        for(Object p : result) {
+            Pedido ped = (Pedido) p;
+            Log.i("Platos del pedido: ", ped.getPlatos().toString());
+            Log.i("Mail del pedido: ", ped.getEmail());
+        }
     }
 
     class Task1 extends AsyncTask<String, Void, String> {
@@ -151,7 +157,7 @@ public class PedidoActivity extends AppCompatActivity implements RecyclerItemTou
         @Override
         protected String doInBackground(String... params) {
             try{
-                Thread.sleep(5000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -160,14 +166,17 @@ public class PedidoActivity extends AppCompatActivity implements RecyclerItemTou
         @Override
         protected void onPostExecute(String result) {
                 Pedido nuevoPedido = new Pedido();
-              //nuevoPedido.setPlatos(AdapterDatosRecycler.listaPlatosPedidos);
-                AdapterDatosRecycler.listaPlatosPedidos.clear();
+                nuevoPedido.setPlatos(AdapterDatosRecycler.listaPlatosPedidos);
 
                 nuevoPedido.setDireccion(direccion.getText().toString());
                 nuevoPedido.setEmail(email.getText().toString());
                 nuevoPedido.setParaEnviar(envioDomicilio.isSelected());
 
+                Log.i("holis", nuevoPedido.getPlatos().toString());
                 repositoryPedido.insertar(nuevoPedido);
+                repositoryPedido.buscarTodos();
+
+                AdapterDatosRecycler.listaPlatosPedidos.clear();
 
                 Intent notificationIntent = new Intent(contexto, MyNotificationPublisher.class);
                 contexto.sendBroadcast(notificationIntent);

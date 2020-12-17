@@ -10,8 +10,8 @@ import androidx.room.TypeConverters;
 import model.Pedido;
 import model.Plato;
 
-@Database(entities = {Plato.class, Pedido.class}, version = 2)
-@TypeConverters({Converters.class})
+@Database(entities = {Plato.class, Pedido.class}, version = 3)
+@TypeConverters({ConverterPlato.class})
 public abstract class AppDatabase extends RoomDatabase {
     public abstract PlatoDao platoDao();
     public abstract PedidoDao pedidoDao();

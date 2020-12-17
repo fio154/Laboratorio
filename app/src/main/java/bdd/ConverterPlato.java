@@ -8,15 +8,17 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class Converters {
+import model.Plato;
+
+public class ConverterPlato {
     @TypeConverter
-    public static ArrayList<String> fromString(String value) {
-        Type listType = new TypeToken<ArrayList<String>>() {}.getType();
+    public static ArrayList<Plato> toList(String value) {
+        Type listType = new TypeToken<ArrayList<Plato>>() {}.getType();
         return new Gson().fromJson(value, listType);
     }
 
     @TypeConverter
-    public static String fromArrayList(ArrayList<String> list) {
+    public static String fromList(ArrayList<Plato> list) {
         Gson gson = new Gson();
         String json = gson.toJson(list);
         return json;
