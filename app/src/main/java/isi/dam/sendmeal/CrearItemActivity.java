@@ -10,10 +10,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.List;
 
 import bdd.AppRepositoryPlato;
 import model.Plato;
+import retrofit.PlatoService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CrearItemActivity extends AppCompatActivity implements AppRepositoryPlato.OnResultCallback {
 
@@ -50,6 +59,7 @@ public class CrearItemActivity extends AppCompatActivity implements AppRepositor
 
         // BASE DE DATOS
         repository = new AppRepositoryPlato(this.getApplication(), (AppRepositoryPlato.OnResultCallback) this);
+
     }
 
     public boolean validarDatos() {
@@ -95,6 +105,37 @@ public class CrearItemActivity extends AppCompatActivity implements AppRepositor
 
         repository.insertar(plato);
         repository.buscarTodos();
+
+        String url = "http://192.168.0.16:3001/";
+
+        Gson gson = new GsonBuilder().setLenient().create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                // En la siguiente linea, le especificamos a Retrofit que tiene que usar Gson para deserializar nuestros objetos
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        PlatoService platoService = retrofit.create(PlatoService.class);
+
+        Call<List<Plato>> callPlatos = platoService.getPlatoList();
+
+        callPlatos.enqueue(
+                new Callback<List<Plato>>() {
+                    @Override
+                    public void onResponse(Call<List<Plato>> call, Response<List<Plato>> response) {
+                        if (response.code() == 200) {
+                            System.out.println("exitooo");
+                            Log.d("DEBUG", "Returno Exitoso");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Plato>> call, Throwable t) {
+                        System.out.println("falloooo");
+                        Log.d("DEBUG", "Returno Fallido");
+                    }
+                }
+        );
 
         Toast.makeText(this, "¡Se ha registrado el plato con exito!", Toast.LENGTH_SHORT).show();
 
