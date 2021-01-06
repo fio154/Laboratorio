@@ -17,6 +17,9 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -25,6 +28,13 @@ import bdd.AppRepositoryPlato;
 import bdd.AppRepositoryPedido;
 import model.Pedido;
 import model.Plato;
+import retrofit.PedidoService;
+import retrofit.PlatoService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PedidoActivity extends AppCompatActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener, AppRepositoryPedido.OnResultCallback {
 
@@ -175,6 +185,39 @@ public class PedidoActivity extends AppCompatActivity implements RecyclerItemTou
                 Log.i("holis", nuevoPedido.getPlatos().toString());
                 repositoryPedido.insertar(nuevoPedido);
                 repositoryPedido.buscarTodos();
+
+                String url = "http://192.168.0.16:3001/";
+
+                Gson gson = new GsonBuilder().setLenient().create();
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(url)
+                        // En la siguiente linea, le especificamos a Retrofit que tiene que usar Gson para deserializar nuestros objetos
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .build();
+
+                PedidoService pedidoService = retrofit.create(PedidoService.class);
+
+                pedidoService.createPedido(nuevoPedido);
+
+                Call<List<Pedido>> callPedidos = pedidoService.getPedidoList();
+
+                callPedidos.enqueue(
+                        new Callback<List<Pedido>>() {
+                            @Override
+                            public void onResponse(Call<List<Pedido>> call, Response<List<Pedido>> response) {
+                                if (response.code() == 200) {
+                                    System.out.println("exitooo");
+                                    Log.d("DEBUG", "Returno Exitoso");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<Pedido>> call, Throwable t) {
+                                System.out.println("falloooo");
+                                Log.d("DEBUG", "Returno Fallido");
+                            }
+                        }
+                );
 
                 AdapterDatosRecycler.listaPlatosPedidos.clear();
 

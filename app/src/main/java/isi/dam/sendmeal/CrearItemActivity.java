@@ -117,6 +117,8 @@ public class CrearItemActivity extends AppCompatActivity implements AppRepositor
 
         PlatoService platoService = retrofit.create(PlatoService.class);
 
+        platoService.createPlato(plato);
+
         Call<List<Plato>> callPlatos = platoService.getPlatoList();
 
         callPlatos.enqueue(
