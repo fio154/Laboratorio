@@ -32,7 +32,7 @@ public class PedidoActivity extends AppCompatActivity implements RecyclerItemTou
     ArrayList<String> listaNombres, listaPrecios, listaCantidades;
     ArrayList<Double> listaPrecios_double;
     RecyclerView recycler;
-    Button agregarPlato, confirmarPedido;
+    Button agregarPlato, confirmarPedido, ubicacion;
     TextView total, email, direccion;
     RadioButton envioDomicilio, takeAway;
     static final int REQUEST_CODE = 222;
@@ -75,6 +75,15 @@ public class PedidoActivity extends AppCompatActivity implements RecyclerItemTou
             }
         });
 
+        final Intent ubicacionMapa = new Intent(this, MapActivity.class);
+
+        ubicacion = (Button) findViewById(R.id.ubicacion);
+        ubicacion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(ubicacionMapa);
+            }
+        });
 
     }
 

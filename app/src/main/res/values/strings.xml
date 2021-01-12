@@ -30,7 +30,9 @@
     <string name="tipoEnvio1">Envío a domicilio</string>
     <string name="tipoEnvio2">TakeAway</string>
     <string name="confirmar">CONFIRMAR PEDIDO</string>
+    <string name="agregarUbi">Agregar Ubicación</string>
     <string name="channel_name">Canal send meal</string>
     <string name="channel_description">Pedido confirmado - canal</string>
+    <string name="google_maps_key">AIzaSyBOR-4ZmV4-wrUlUW47axC7f3DYR-L7xpo</string>
 
 </resources>
