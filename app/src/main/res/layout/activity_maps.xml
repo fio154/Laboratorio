@@ -1,5 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorPrincipalAzulOscuro"
+    tools:context=".MapActivity">
+    <TextView
+        android:id="@+id/Latitud"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:text="Latitud: "
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/blanco" />
+    <TextView
+        android:id="@+id/Longitud"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:text="Longitud: "
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/blanco"/>
+
+    <Button
+        android:id="@+id/confirmar_ubicacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/boton_redondo"
+        android:text="Confirmar ubicación"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/blanco" />
+
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:map="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -9,3 +42,4 @@
         android:layout_height="match_parent"
         tools:context=".MapActivity" />
 
+</LinearLayout>

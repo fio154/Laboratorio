@@ -36,6 +36,7 @@ public class PedidoActivity extends AppCompatActivity implements RecyclerItemTou
     TextView total, email, direccion;
     RadioButton envioDomicilio, takeAway;
     static final int REQUEST_CODE = 222;
+    static final int REQUEST_CODE_MAPS = 111;
     AdapterDatosPedido adapterPedido;
 
     @Override
@@ -75,13 +76,14 @@ public class PedidoActivity extends AppCompatActivity implements RecyclerItemTou
             }
         });
 
+
         final Intent ubicacionMapa = new Intent(this, MapActivity.class);
 
         ubicacion = (Button) findViewById(R.id.ubicacion);
         ubicacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(ubicacionMapa);
+                startActivityForResult(ubicacionMapa, REQUEST_CODE_MAPS);
             }
         });
 
@@ -141,6 +143,14 @@ public class PedidoActivity extends AppCompatActivity implements RecyclerItemTou
                 total.setText(String.valueOf(total_aux));
 
             } else if(result_code == RESULT_CANCELED){
+                System.out.println("NO FUNCIONO");
+            }
+        }
+
+        if(request_code == REQUEST_CODE_MAPS) {
+            if (result_code == RESULT_OK) {
+
+            }else if(result_code == RESULT_CANCELED){
                 System.out.println("NO FUNCIONO");
             }
         }
