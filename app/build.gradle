@@ -36,4 +36,11 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
+        // Utilities for Maps SDK for Android (requires Google Play Services)
+        implementation 'com.google.maps.android:android-maps-utils:2.1.0'
+
+        // Alternately - Utilities for Maps SDK v3 BETA for Android (does not require Google Play Services)
+        //
+    // implementation 'com.google.maps.android:android-maps-utils-v3:2.1.0'
+
 }
