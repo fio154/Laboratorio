@@ -2,9 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="isi.dam.sendmeal">
-
+    <uses-feature android:name="android.hardware.camera"
+        android:required="true"></uses-feature>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -13,9 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key"/>
+            android:value="@string/google_maps_key" />
+
         <activity android:name=".HomeActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
@@ -30,19 +33,15 @@
         <activity
             android:name=".CrearItemActivity"
             android:parentActivityName=".HomeActivity" />
-        <activity
-            android:name=".ListaItemsActivity"/>
-        <activity
-            android:name=".MapActivity"/>
+        <activity android:name=".ListaItemsActivity" />
+        <activity android:name=".MapActivity" />
         <activity
             android:name=".MainActivity"
             android:parentActivityName=".HomeActivity" />
-        <receiver android:name=".MyNotificationPublisher" android:exported="true">
-        </receiver>
 
+        <receiver
+            android:name=".MyNotificationPublisher"
+            android:exported="true"></receiver>
     </application>
-
-
-
 
 </manifest>

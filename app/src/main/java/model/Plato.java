@@ -9,6 +9,7 @@ public class Plato implements Parcelable {
     private String titulo, descripcion;
     private Double precio;
     private Integer calorias;
+    private String urlFoto="";
 
     public static ArrayList<Plato> lista_platos = new ArrayList<Plato>();
 
@@ -74,6 +75,12 @@ public class Plato implements Parcelable {
     public void setCalorias(Integer calorias) {
         this.calorias = calorias;
     }
+
+    public String getUrlFoto(){return urlFoto; }
+
+    public void setUrlFoto(String url) { this.urlFoto = url; }
+
+
 
     @Override
     public int describeContents() {

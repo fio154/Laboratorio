@@ -1,13 +1,28 @@
 package isi.dam.sendmeal;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
 
 import model.Plato;
 
@@ -16,7 +31,14 @@ public class CrearItemActivity extends AppCompatActivity {
     EditText titulo, descripcion,precio, calorias;
     Toolbar toolbar;
     Button guardar;
-
+    Button capturarImagen;
+    Button buscarGaleria;
+    static final int CAMARA_REQUEST = 1;
+    static final int GALERIA_REQUEST = 2;
+    ImageView imgView;
+    private StorageReference storageRef;
+    private StorageReference platosImagesRef;
+    private byte[] imagenAGuardar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +54,9 @@ public class CrearItemActivity extends AppCompatActivity {
         precio = (EditText) findViewById(R.id.precio_pedido);
         calorias = (EditText) findViewById(R.id.calorias);
         guardar = (Button) findViewById(R.id.btn_guardar);
-
+        capturarImagen = (Button) findViewById(R.id.camara);
+        imgView = (ImageView) findViewById(R.id.imageView);
+        buscarGaleria = (Button) findViewById(R.id.galeria);
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -41,6 +65,24 @@ public class CrearItemActivity extends AppCompatActivity {
                 }
             }
         });
+        capturarImagen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+              lanzarCamara();
+            }
+        });
+        buscarGaleria.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                abrirGaleria();
+            }
+        });
+
+        // Creamos una referencia a nuestro Storage
+        storageRef = FirebaseStorage.getInstance().getReference();
+
+        // Creamos una referencia a 'images/plato_id.jpg'
+        StorageReference platosImagesRef = storageRef.child("images/plato_id.jpg");
     }
 
     public boolean validarDatos() {
@@ -82,6 +124,9 @@ public class CrearItemActivity extends AppCompatActivity {
         plato.setPrecio(precio_db);
         plato.setCalorias(calorias_int);
 
+        platosImagesRef = storageRef.child("images/"+titulo_str+".jpg");
+        someFunction(imagenAGuardar, plato); //persistimos imagen en Cloud Storage
+
         Plato.lista_platos.add(plato);
 
         Toast.makeText(this, "¡Se ha registrado el plato con exito!", Toast.LENGTH_SHORT).show();
@@ -104,5 +149,58 @@ public class CrearItemActivity extends AppCompatActivity {
         }
 
         return false;
+    }
+
+    private void lanzarCamara() {
+        Intent camaraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(camaraIntent, CAMARA_REQUEST);
+    }
+
+    private void abrirGaleria() {
+        Intent galeriaIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(galeriaIntent, GALERIA_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if ((requestCode == CAMARA_REQUEST || requestCode == GALERIA_REQUEST) && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+           imgView.setImageBitmap(imageBitmap);
+            imagenAGuardar = baos.toByteArray(); // Imagen en arreglo de bytes
+        }
+    }
+
+    private void someFunction(byte[] foto, final Plato platoN) {
+
+
+        UploadTask uploadTask = platosImagesRef.putBytes(foto);
+
+        // Registramos un listener para saber el resultado de la operación
+        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+
+                // Continuamos con la tarea para obtener la URL
+                return platosImagesRef.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    // URL de descarga del archivo
+                    Uri downloadUri = task.getResult();
+                    platoN.setUrlFoto(downloadUri.getLastPathSegment());
+                } else {
+                    // Fallo
+                }
+            }
+        });
     }
 }
