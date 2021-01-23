@@ -39,6 +39,7 @@ public class CrearItemActivity extends AppCompatActivity {
     private StorageReference storageRef;
     private StorageReference platosImagesRef;
     private byte[] imagenAGuardar;
+    Plato plato = new Plato();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,9 @@ public class CrearItemActivity extends AppCompatActivity {
         guardar = (Button) findViewById(R.id.btn_guardar);
         capturarImagen = (Button) findViewById(R.id.camara);
         imgView = (ImageView) findViewById(R.id.imageView);
+
+        imgView.setVisibility(View.GONE);
+
         buscarGaleria = (Button) findViewById(R.id.galeria);
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,14 +122,38 @@ public class CrearItemActivity extends AppCompatActivity {
         Double precio_db = Double.parseDouble(precio.getText().toString());
         Integer calorias_int = Integer.parseInt(calorias.getText().toString());
 
-        Plato plato = new Plato();
         plato.setTitulo(titulo_str);
         plato.setDescripcion(descripcion_str);
         plato.setPrecio(precio_db);
         plato.setCalorias(calorias_int);
 
-        platosImagesRef = storageRef.child("images/"+titulo_str+".jpg");
-        someFunction(imagenAGuardar, plato); //persistimos imagen en Cloud Storage
+        platosImagesRef = storageRef.child("/images/"+titulo_str+".jpg");
+        UploadTask uploadTask = platosImagesRef.putBytes(imagenAGuardar);
+
+        // Registramos un listener para saber el resultado de la operación
+        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+
+                // Continuamos con la tarea para obtener la URL
+                return platosImagesRef.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    // URL de descarga del archivo
+                    Uri downloadUri = task.getResult();
+                    plato.setUrlFoto(downloadUri.toString());
+                    System.out.println("URL: "+ plato.getUrlFoto() );
+                } else {
+                    // Fallo
+                }
+            }
+        });
 
         Plato.lista_platos.add(plato);
 
@@ -135,6 +163,7 @@ public class CrearItemActivity extends AppCompatActivity {
         descripcion.setText(null);
         precio.setText(null);
         calorias.setText(null);
+        imgView.setVisibility(View.GONE);
     }
 
     public boolean platoRepetido(String plato){
@@ -165,42 +194,14 @@ public class CrearItemActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if ((requestCode == CAMARA_REQUEST || requestCode == GALERIA_REQUEST) && resultCode == RESULT_OK) {
+            imgView.setVisibility(View.VISIBLE);
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-           imgView.setImageBitmap(imageBitmap);
+            imgView.setImageBitmap(imageBitmap);
             imagenAGuardar = baos.toByteArray(); // Imagen en arreglo de bytes
         }
     }
 
-    private void someFunction(byte[] foto, final Plato platoN) {
-
-
-        UploadTask uploadTask = platosImagesRef.putBytes(foto);
-
-        // Registramos un listener para saber el resultado de la operación
-        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-            @Override
-            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                if (!task.isSuccessful()) {
-                    throw task.getException();
-                }
-
-                // Continuamos con la tarea para obtener la URL
-                return platosImagesRef.getDownloadUrl();
-            }
-        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                if (task.isSuccessful()) {
-                    // URL de descarga del archivo
-                    Uri downloadUri = task.getResult();
-                    platoN.setUrlFoto(downloadUri.getLastPathSegment());
-                } else {
-                    // Fallo
-                }
-            }
-        });
-    }
 }

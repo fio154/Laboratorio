@@ -1,30 +1,48 @@
 package isi.dam.sendmeal;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
 import model.Plato;
 
+import static android.content.ContentValues.TAG;
+
 public class AdapterDatosRecycler extends RecyclerView.Adapter<AdapterDatosRecycler.PlatoViewHolder> {
 
-    ArrayList<String> listaNombres, listaPrecios, listaDescripciones;
+    ArrayList<String> listaNombres, listaPrecios, listaDescripciones, listaImagenes;
     ArrayList<TextView> listaCantidades;
     public static ArrayList<Plato> listaPlatosPedidos = new ArrayList<Plato>();
     String pantallaAnterior;
     Dialog myDialog;
 
-    public AdapterDatosRecycler(ArrayList<String> listaNombres, ArrayList<String> listaPrecios, ArrayList<String> listaDescripciones, String pantallaAnterior, Dialog myDialog) {
+    public AdapterDatosRecycler(ArrayList<String> listaImagenes, ArrayList<String> listaNombres, ArrayList<String> listaPrecios, ArrayList<String> listaDescripciones, String pantallaAnterior, Dialog myDialog) {
+        this.listaImagenes = listaImagenes;
         this.listaNombres = listaNombres;
         this.listaPrecios = listaPrecios;
         this.listaDescripciones = listaDescripciones;
@@ -42,7 +60,7 @@ public class AdapterDatosRecycler extends RecyclerView.Adapter<AdapterDatosRecyc
 
     @Override
     public void onBindViewHolder(@NonNull PlatoViewHolder holder, int position) {
-        holder.asignarDatos(listaNombres.get(position), listaPrecios.get(position), listaDescripciones.get(position), pantallaAnterior);
+        holder.asignarDatos(listaImagenes.get(position), listaNombres.get(position), listaPrecios.get(position), listaDescripciones.get(position), pantallaAnterior);
     }
 
     @Override
@@ -54,6 +72,7 @@ public class AdapterDatosRecycler extends RecyclerView.Adapter<AdapterDatosRecyc
 
         TextView plato, precio, cantidad;
         Button aumentarCantidad, disminuirCantidad, verDescripcion;
+        ImageView imagen;
 
 
         public PlatoViewHolder(@NonNull View itemView) {
@@ -66,13 +85,37 @@ public class AdapterDatosRecycler extends RecyclerView.Adapter<AdapterDatosRecyc
             aumentarCantidad = (Button) itemView.findViewById(R.id.buttonAumentar);
             disminuirCantidad = (Button) itemView.findViewById(R.id.buttonDisminuir);
             verDescripcion = (Button) itemView.findViewById(R.id.ver);
+            imagen = (ImageView) itemView.findViewById(R.id.imagen);
 
 
         }
 
-        public void asignarDatos(String platos, String precios, final String descripciones, String pantallaAnterior) {
+        public void asignarDatos(final String imagenes, String platos, String precios, final String descripciones, String pantallaAnterior) {
             plato.setText(platos);
             precio.setText(precios);
+
+            // Creamos una referencia al storage con la Uri de la img
+            StorageReference gsReference = FirebaseStorage.getInstance().getReferenceFromUrl(imagenes);
+
+            final long THREE_MEGABYTE = 3 * 1024 * 1024;
+            gsReference.getBytes(THREE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    // Exito
+                    Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    DisplayMetrics dm = new DisplayMetrics();
+                    //getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+                    imagen.setMinimumHeight(dm.heightPixels);
+                    imagen.setMinimumWidth(dm.widthPixels);
+                    imagen.setImageBitmap(bm);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Error - Cargar una imagen por defecto
+                }
+            });
 
             if(pantallaAnterior.equals("home")){
                 cantidad.setVisibility(View.GONE);

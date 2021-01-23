@@ -3,6 +3,8 @@ package model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.firebase.storage.StorageReference;
+
 import java.util.ArrayList;
 
 public class Plato implements Parcelable {
@@ -10,7 +12,6 @@ public class Plato implements Parcelable {
     private Double precio;
     private Integer calorias;
     private String urlFoto="";
-
     public static ArrayList<Plato> lista_platos = new ArrayList<Plato>();
 
     public Plato(Parcel in) {

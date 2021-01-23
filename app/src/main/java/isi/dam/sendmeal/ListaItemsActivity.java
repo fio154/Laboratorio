@@ -10,11 +10,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.storage.StorageManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -23,7 +26,8 @@ import model.Plato;
 public class ListaItemsActivity extends AppCompatActivity {
 
     Toolbar toolbar;
-    ArrayList<String> listaNombres, listaPrecios, listaDescripciones;
+    ArrayList<String> listaNombres, listaPrecios, listaDescripciones, listaImagenes;
+    ArrayList<StorageReference> listaStorage;
     RecyclerView recycler;
     String pantallaAnterior;
     Button confirmarPlato, pedir;
@@ -45,18 +49,23 @@ public class ListaItemsActivity extends AppCompatActivity {
         listaNombres = new ArrayList<String>();
         listaPrecios = new ArrayList<String>();
         listaDescripciones = new ArrayList<String>();
+        listaImagenes = new ArrayList<String>();
+        listaStorage = new ArrayList<StorageReference>();
 
         Bundle extras = getIntent().getExtras();
 
         pantallaAnterior = extras.getString("pantalla");
 
+        System.out.println("PLATOSSSS: "+Plato.lista_platos);
+
         for (int i = 0; i < Plato.lista_platos.size(); i++) {
             listaNombres.add(Plato.lista_platos.get(i).getTitulo());
             listaPrecios.add("Precio: $" + (Plato.lista_platos.get(i).getPrecio()).toString());
             listaDescripciones.add(Plato.lista_platos.get(i).getDescripcion());
+            listaImagenes.add(Plato.lista_platos.get(i).getUrlFoto());
         }
 
-        final AdapterDatosRecycler adapter = new AdapterDatosRecycler(listaNombres, listaPrecios, listaDescripciones, pantallaAnterior, new Dialog(this));
+        final AdapterDatosRecycler adapter = new AdapterDatosRecycler(listaImagenes, listaNombres, listaPrecios, listaDescripciones, pantallaAnterior, new Dialog(this));
         recycler.setAdapter(adapter);
 
         confirmarPlato = (Button) findViewById(R.id.confirmarPedido_btn);
