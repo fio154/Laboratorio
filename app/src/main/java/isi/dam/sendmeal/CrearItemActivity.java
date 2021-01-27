@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -22,7 +23,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 import model.Plato;
 
@@ -190,7 +194,7 @@ public class CrearItemActivity extends AppCompatActivity {
         startActivityForResult(galeriaIntent, GALERIA_REQUEST);
     }
 
-    @Override
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if ((requestCode == CAMARA_REQUEST || requestCode == GALERIA_REQUEST) && resultCode == RESULT_OK) {
@@ -202,6 +206,46 @@ public class CrearItemActivity extends AppCompatActivity {
             imgView.setImageBitmap(imageBitmap);
             imagenAGuardar = baos.toByteArray(); // Imagen en arreglo de bytes
         }
+    }*/
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK) {
+            if (requestCode == CAMARA_REQUEST) {
+
+                Bundle extras = data.getExtras();
+                Bitmap imageBitmap = (Bitmap) extras.get("data");
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                imagenAGuardar = baos.toByteArray(); // Imagen en arreglo de bytes
+                imgView.setVisibility(View.VISIBLE);
+                imgView.setImageBitmap(imageBitmap);
+
+            }
+            else if(requestCode == GALERIA_REQUEST) {
+                Uri selectedImage = data.getData();
+                InputStream is;
+                try {
+                    is = getContentResolver().openInputStream(selectedImage);
+                    BufferedInputStream bis = new BufferedInputStream(is);
+                    Bitmap imageBitmap = BitmapFactory.decodeStream(bis);
+
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+
+
+                    imagenAGuardar = baos.toByteArray(); // Imagen en arreglo de bytes
+
+                    imgView.setImageBitmap(imageBitmap);
+                    imgView.setVisibility(View.VISIBLE);
+
+
+                } catch (FileNotFoundException e) {}
+            }
+        }
+
     }
 
 }
