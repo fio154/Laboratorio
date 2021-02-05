@@ -3,6 +3,8 @@ package model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.firebase.storage.StorageReference;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -11,6 +13,7 @@ import java.util.ArrayList;
 
 @Entity(tableName = "plato")
 public class Plato implements Parcelable {
+    private String urlFoto="";
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(index = true, name = "id")
@@ -100,6 +103,12 @@ public class Plato implements Parcelable {
     public void setCalorias(Integer calorias) {
         this.calorias = calorias;
     }
+
+    public String getUrlFoto(){return urlFoto; }
+
+    public void setUrlFoto(String url) { this.urlFoto = url; }
+
+
 
     @Override
     public int describeContents() {

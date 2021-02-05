@@ -82,13 +82,51 @@
             android:backgroundTint="@color/colorPrimary"/>
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/galeria"
+            android:layout_width="192dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/boton_redondo"
+            android:text="@string/agregarFotoGaleria"
+            android:textColor="@color/blanco" />
+
+        <Button
+            android:id="@+id/camara"
+            android:layout_width="189dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="5"
+            android:background="@drawable/boton_redondo"
+            android:text="@string/agregarFotoCamara"
+            android:textColor="@color/blanco" />
+    </LinearLayout>
+
     <Button
         android:id="@+id/btn_guardar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="guardar"
         android:background="@drawable/boton_redondo"
-        android:textColor="@color/blanco"/>
+        android:textColor="@color/blanco"
+        android:layout_marginTop="20dp"/>
 
 
 </LinearLayout>

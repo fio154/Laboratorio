@@ -43,10 +43,11 @@ public class PedidoActivity extends AppCompatActivity implements RecyclerItemTou
     ArrayList<String> listaNombres, listaPrecios, listaCantidades;
     ArrayList<Double> listaPrecios_double;
     RecyclerView recycler;
-    Button agregarPlato, confirmarPedido;
+    Button agregarPlato, confirmarPedido, ubicacion;
     TextView total, email, direccion;
     RadioButton envioDomicilio, takeAway;
     static final int REQUEST_CODE = 222;
+    static final int REQUEST_CODE_MAPS = 111;
     AdapterDatosPedido adapterPedido;
     AppRepositoryPedido repositoryPedido;
 
@@ -89,6 +90,18 @@ public class PedidoActivity extends AppCompatActivity implements RecyclerItemTou
                 }
             }
         });
+
+
+        final Intent ubicacionMapa = new Intent(this, MapActivity.class);
+
+        ubicacion = (Button) findViewById(R.id.ubicacion);
+        ubicacion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(ubicacionMapa, REQUEST_CODE_MAPS);
+            }
+        });
+
     }
 
     @Override
@@ -145,6 +158,14 @@ public class PedidoActivity extends AppCompatActivity implements RecyclerItemTou
                 System.out.println("NO FUNCIONO");
             }
         }
+
+        if(request_code == REQUEST_CODE_MAPS) {
+            if (result_code == RESULT_OK) {
+
+            }else if(result_code == RESULT_CANCELED){
+                System.out.println("NO FUNCIONO");
+            }
+        }
     }
 
     @Override
@@ -177,6 +198,7 @@ public class PedidoActivity extends AppCompatActivity implements RecyclerItemTou
         protected void onPostExecute(String result) {
                 Pedido nuevoPedido = new Pedido();
                 nuevoPedido.setPlatos(AdapterDatosRecycler.listaPlatosPedidos);
+                AdapterDatosRecycler.listaPlatosPedidos.clear();
 
                 nuevoPedido.setDireccion(direccion.getText().toString());
                 nuevoPedido.setEmail(email.getText().toString());
