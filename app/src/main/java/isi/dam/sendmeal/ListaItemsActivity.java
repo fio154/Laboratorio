@@ -133,7 +133,7 @@ public class ListaItemsActivity extends AppCompatActivity implements AppReposito
             listaDescripciones.add(platos.get(i).getDescripcion());
         }
 
-        adapter = new AdapterDatosRecycler(listaNombres, listaPrecios, listaDescripciones, pantallaAnterior, new Dialog(context));
+        adapter = new AdapterDatosRecycler(listaImagenes, listaNombres, listaPrecios, listaDescripciones, pantallaAnterior, new Dialog(context));
         recycler.setAdapter(adapter);
     }
 }

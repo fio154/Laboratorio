@@ -246,27 +246,12 @@ public class CrearItemActivity extends AppCompatActivity implements AppRepositor
         startActivityForResult(galeriaIntent, GALERIA_REQUEST);
     }
 
-    /*@Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if ((requestCode == CAMARA_REQUEST || requestCode == GALERIA_REQUEST) && resultCode == RESULT_OK) {
-            imgView.setVisibility(View.VISIBLE);
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-            imgView.setImageBitmap(imageBitmap);
-            imagenAGuardar = baos.toByteArray(); // Imagen en arreglo de bytes
-        }
-    }*/
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(resultCode == RESULT_OK) {
             if (requestCode == CAMARA_REQUEST) {
-
                 Bundle extras = data.getExtras();
                 Bitmap imageBitmap = (Bitmap) extras.get("data");
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -286,7 +271,6 @@ public class CrearItemActivity extends AppCompatActivity implements AppRepositor
 
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-
 
                     imagenAGuardar = baos.toByteArray(); // Imagen en arreglo de bytes
 
