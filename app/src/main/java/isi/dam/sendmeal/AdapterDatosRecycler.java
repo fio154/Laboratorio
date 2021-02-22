@@ -69,7 +69,6 @@ public class AdapterDatosRecycler extends RecyclerView.Adapter<AdapterDatosRecyc
     }
 
     public class PlatoViewHolder extends RecyclerView.ViewHolder {
-
         TextView plato, precio, cantidad;
         Button aumentarCantidad, disminuirCantidad, verDescripcion;
         ImageView imagen;
@@ -86,8 +85,6 @@ public class AdapterDatosRecycler extends RecyclerView.Adapter<AdapterDatosRecyc
             disminuirCantidad = (Button) itemView.findViewById(R.id.buttonDisminuir);
             verDescripcion = (Button) itemView.findViewById(R.id.ver);
             imagen = (ImageView) itemView.findViewById(R.id.imagen);
-
-
         }
 
         public void asignarDatos(final String imagenes, String platos, String precios, final String descripciones, String pantallaAnterior) {
@@ -114,6 +111,7 @@ public class AdapterDatosRecycler extends RecyclerView.Adapter<AdapterDatosRecyc
                 @Override
                 public void onFailure(@NonNull Exception exception) {
                     // Error - Cargar una imagen por defecto
+                    Log.i("Error", "Cargar imagen por defecto");
                 }
             });
 

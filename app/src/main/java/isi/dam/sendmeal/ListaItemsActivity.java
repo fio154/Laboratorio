@@ -47,7 +47,6 @@ public class ListaItemsActivity extends AppCompatActivity implements AppReposito
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         recycler = (RecyclerView) findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
@@ -61,20 +60,21 @@ public class ListaItemsActivity extends AppCompatActivity implements AppReposito
 
         pantallaAnterior = extras.getString("pantalla");
 
-        System.out.println("PLATOSSSS: "+Plato.lista_platos);
+        ArrayList<Plato> lista_platos = (ArrayList<Plato>) platos;
 
-        for (int i = 0; i < Plato.lista_platos.size(); i++) {
-            listaNombres.add(Plato.lista_platos.get(i).getTitulo());
-            listaPrecios.add("Precio: $" + (Plato.lista_platos.get(i).getPrecio()).toString());
-            listaDescripciones.add(Plato.lista_platos.get(i).getDescripcion());
-            listaImagenes.add(Plato.lista_platos.get(i).getUrlFoto());
-        }
         // BASE DE DATOS
         repository = new AppRepositoryPlato(this.getApplication(), this);
         repository.buscarTodos();
 
-        final AdapterDatosRecycler adapter = new AdapterDatosRecycler(listaImagenes, listaNombres, listaPrecios, listaDescripciones, pantallaAnterior, new Dialog(this));
-        recycler.setAdapter(adapter);
+        /*for (int i = 0; i < platos.size(); i++) {
+            listaNombres.add(platos.get(i).getTitulo());
+            listaPrecios.add("Precio: $" + (platos.get(i).getPrecio()).toString());
+            listaDescripciones.add(platos.get(i).getDescripcion());
+            listaImagenes.add(platos.get(i).getUrlFoto());
+        }
+
+        adapter = new AdapterDatosRecycler(listaImagenes, listaNombres, listaPrecios, listaDescripciones, pantallaAnterior, new Dialog(this));
+        recycler.setAdapter(adapter);*/
         context = this;
 
         confirmarPlato = (Button) findViewById(R.id.confirmarPedido_btn);
@@ -95,7 +95,7 @@ public class ListaItemsActivity extends AppCompatActivity implements AppReposito
                         }
                     }
                 }
-                Log.i("LISTA", AdapterDatosRecycler.listaPlatosPedidos.toString());
+                Log.i("LISTA PEDIDOS", AdapterDatosRecycler.listaPlatosPedidos.toString());
                 Intent intent = new Intent();
                 intent.putParcelableArrayListExtra("listaPlatos", AdapterDatosRecycler.listaPlatosPedidos);
                 setResult(RESULT_OK, intent);
@@ -106,13 +106,12 @@ public class ListaItemsActivity extends AppCompatActivity implements AppReposito
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-
         final Intent anteriorHome = new Intent(this, HomeActivity.class);
         final Intent anteriorPedido = new Intent(this, PedidoActivity.class);
 
         if(pantallaAnterior.equals("home")){
              startActivity(anteriorHome);
-        }else if(pantallaAnterior.equals("pedido")){
+        } else if(pantallaAnterior.equals("pedido")){
              startActivity(anteriorPedido);
         }
 
@@ -131,6 +130,8 @@ public class ListaItemsActivity extends AppCompatActivity implements AppReposito
             System.out.println("nombreeee: " + platos.get(i).getTitulo());
             listaPrecios.add("Precio: $" + (platos.get(i).getPrecio()).toString());
             listaDescripciones.add(platos.get(i).getDescripcion());
+            listaImagenes.add(platos.get(i).getUrlFoto());
+            Log.i("ListaIMAGENES", listaImagenes.toString());
         }
 
         adapter = new AdapterDatosRecycler(listaImagenes, listaNombres, listaPrecios, listaDescripciones, pantallaAnterior, new Dialog(context));

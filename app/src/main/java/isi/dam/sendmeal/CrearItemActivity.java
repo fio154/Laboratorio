@@ -32,6 +32,8 @@ import java.io.InputStream;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 import bdd.AppRepositoryPlato;
@@ -56,7 +58,8 @@ public class CrearItemActivity extends AppCompatActivity implements AppRepositor
     private StorageReference storageRef;
     private StorageReference platosImagesRef;
     private byte[] imagenAGuardar;
-    Plato plato = new Plato();
+    Plato plato;
+    List<Plato> lista_platos;
 
     AppRepositoryPlato repository;
 
@@ -111,6 +114,7 @@ public class CrearItemActivity extends AppCompatActivity implements AppRepositor
         // BASE DE DATOS
         repository = new AppRepositoryPlato(this.getApplication(), (AppRepositoryPlato.OnResultCallback) this);
 
+        repository.buscarTodos();
     }
 
     public boolean validarDatos() {
@@ -146,7 +150,7 @@ public class CrearItemActivity extends AppCompatActivity implements AppRepositor
         Double precio_db = Double.parseDouble(precio.getText().toString());
         Integer calorias_int = Integer.parseInt(calorias.getText().toString());
 
-        Plato plato = new Plato();
+        plato = new Plato();
         plato.setTitulo(titulo_str);
         plato.setDescripcion(descripcion_str);
         plato.setPrecio(precio_db);
@@ -173,19 +177,18 @@ public class CrearItemActivity extends AppCompatActivity implements AppRepositor
                     // URL de descarga del archivo
                     Uri downloadUri = task.getResult();
                     plato.setUrlFoto(downloadUri.toString());
-                    System.out.println("URL: "+ plato.getUrlFoto() );
+                    System.out.println("URL: "+ plato.getUrlFoto());
+                    repository.insertar(plato);
+                    repository.buscarTodos();
                 } else {
+                    Log.i("FALLO", "FALLO IMAGES");
                     // Fallo
                 }
             }
         });
 
-        Plato.lista_platos.add(plato);
 
-        repository.insertar(plato);
-        repository.buscarTodos();
-
-        String url = "http://192.168.0.16:3001/";
+        /*String url = "http://192.168.0.16:3001/";
 
         Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder()
@@ -195,9 +198,7 @@ public class CrearItemActivity extends AppCompatActivity implements AppRepositor
                 .build();
 
         PlatoService platoService = retrofit.create(PlatoService.class);
-
         platoService.createPlato(plato);
-
         Call<List<Plato>> callPlatos = platoService.getPlatoList();
 
         callPlatos.enqueue(
@@ -205,18 +206,16 @@ public class CrearItemActivity extends AppCompatActivity implements AppRepositor
                     @Override
                     public void onResponse(Call<List<Plato>> call, Response<List<Plato>> response) {
                         if (response.code() == 200) {
-                            System.out.println("exitooo");
                             Log.d("DEBUG", "Returno Exitoso");
                         }
                     }
 
                     @Override
                     public void onFailure(Call<List<Plato>> call, Throwable t) {
-                        System.out.println("falloooo");
                         Log.d("DEBUG", "Returno Fallido");
                     }
                 }
-        );
+        );*/
 
         Toast.makeText(this, "¡Se ha registrado el plato con exito!", Toast.LENGTH_SHORT).show();
 
@@ -229,8 +228,8 @@ public class CrearItemActivity extends AppCompatActivity implements AppRepositor
 
     public boolean platoRepetido(String plato){
         plato = plato.toLowerCase();
-        for(int i=0; i<Plato.lista_platos.size(); i++){
-            String plato2 = Plato.lista_platos.get(i).getTitulo().toLowerCase();
+        for(int i=0; i<lista_platos.size(); i++){
+            String plato2 = lista_platos.get(i).getTitulo().toLowerCase();
             if(plato.equals(plato2)) return true;
         }
         return false;
@@ -259,7 +258,6 @@ public class CrearItemActivity extends AppCompatActivity implements AppRepositor
                 imagenAGuardar = baos.toByteArray(); // Imagen en arreglo de bytes
                 imgView.setVisibility(View.VISIBLE);
                 imgView.setImageBitmap(imageBitmap);
-
             }
             else if(requestCode == GALERIA_REQUEST) {
                 Uri selectedImage = data.getData();
@@ -276,8 +274,6 @@ public class CrearItemActivity extends AppCompatActivity implements AppRepositor
 
                     imgView.setImageBitmap(imageBitmap);
                     imgView.setVisibility(View.VISIBLE);
-
-
                 } catch (FileNotFoundException e) {}
             }
         }
@@ -288,9 +284,11 @@ public class CrearItemActivity extends AppCompatActivity implements AppRepositor
     @Override
     public void onResult(List result) {
         Toast.makeText(this, "Exito!", Toast.LENGTH_SHORT).show();
+        lista_platos = (List<Plato>) result;
         for(Object p : result) {
             Plato pl = (Plato) p;
             Log.i("Plato: ", pl.getTitulo());
+            Log.i("URL: ", pl.getUrlFoto());
         }
     }
 }

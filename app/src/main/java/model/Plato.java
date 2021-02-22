@@ -31,8 +31,6 @@ public class Plato implements Parcelable {
     @ColumnInfo(name = "calorias")
     public Integer calorias;
 
-    public static ArrayList<Plato> lista_platos = new ArrayList<Plato>();
-
     public Plato(Parcel in) {
         titulo = in.readString();
         descripcion = in.readString();
